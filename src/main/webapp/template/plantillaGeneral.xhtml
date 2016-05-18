@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Project Name</title>
+        <meta name="author" content="The Author"></meta>
+        <h:outputStylesheet library="css" name="style.css"/>
+    </h:head>
+    <h:body style="padding: 60px;">
+        
+        <b:navBar brandHref="#" fixed="top" inverse="true" brandImg="#{facesContext.externalContext.requestContextPath}/resources/img/transparente.png" brand-img-style-class="imgLogoMenu" brand-style-class="navPrincipal" >
+            
+            <b:navbarLinks>
+                <b:navLink value="Inicio" href="#"></b:navLink>
+                <b:navLink value="Acceso" href="#about"></b:navLink>
+                <b:navLink value="Acerca" href="#contact"></b:navLink>
+            </b:navbarLinks>
+            
+        </b:navBar>
+        <b:container>
+            <ui:insert name="contenido"/>
+        </b:container>
+
+    </h:body>
+</html>

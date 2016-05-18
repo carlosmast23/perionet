@@ -1,0 +1,22 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18-may-2016, 11:16:53
+    Author     : carlo
+*/
+
+.imgLogoMenu
+{
+      
+}
+
+.navPrincipal
+{
+    
+    padding: 0px;    
+    background-image: url("#{facesContext.externalContext.requestContextPath}/resources/img/logoPeque.png");
+    background-repeat: no-repeat;
+}
