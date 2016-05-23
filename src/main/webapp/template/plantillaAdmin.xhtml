@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <title>Perionet</title>
+        <meta name="author" content="Riccardo Massera"></meta>
+        <h:outputStylesheet library="css" name="style.css"/>
+
+    </h:head>
+    <h:body style="padding-top: 60px">
+
+        <!--script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.5.2/holder.min.js"></script-->
+        <b:navBar brandHref="#" fixed="top" inverse="true" brandImg="#{facesContext.externalContext.requestContextPath}/resources/img/transparente.png" brand-img-style-class="imgLogoMenu" brand-style-class="navPrincipal" >
+
+            <b:navbarLinks pull="right">
+                <b:navLink value="Pacientes" href="#"></b:navLink>
+                <b:navLink value="Periodontograma" href="#"></b:navLink>
+                <b:navLink value="Historial" href="#"></b:navLink>
+                <b:navLink value="Ayuda" href="#"></b:navLink>
+            </b:navbarLinks>
+
+            <h:form styleClass="navbar-form navbar-right">
+                <div class="form-group">
+                    <b:inputText placeholder="Buscar..." fieldSize="sm"/>
+                </div>
+            </h:form>
+
+        </b:navBar>
+
+
+        <ui:insert name="contenido"/>
+
+
+    </h:body>
+</html>

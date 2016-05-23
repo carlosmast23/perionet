@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/template/plantillaGeneral.xhtml"
+                xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+                >
+
+    <ui:define name="contenido">
+        <h:form>
+            <b:container fluid="true">
+
+                <b:growl id="growlMsg" globalOnly="true" placementFrom="top"
+                         show-detail="true" show-summary="false" allowDismiss="true"
+                         delay="10000" escape="true" /> 
+
+                <b:row>
+                    <b:column offset="1" span="10">
+                        <b:thumbnail>
+                            <img width="40%" src="#{facesContext.externalContext.requestContextPath}/resources/img/login.jpg" align="top"/>
+                        </b:thumbnail>
+                    </b:column>
+                </b:row>
+
+                <b:row>
+                    <b:column offset="3" span="2">
+                        <h:outputText value="Usuario:" />
+                    </b:column>
+                    <b:column span="3">
+                        <b:inputText value="#{loginMB.nick}" id="txtUserName" placeholder="Username" />
+                    </b:column>
+                    <b:column medium-screen="2">
+                        <b:message for="txtUserName"/>
+                    </b:column>
+                </b:row>
+
+                <b:row>
+                    <b:column offset="3" span="2">
+                        <h:outputText value="Contraseña:" />
+                    </b:column>
+                    <b:column span="3">
+                        <b:inputSecret value="#{loginMB.clave}" id="txtPassword" placeholder="Password" />
+                    </b:column>
+                    <b:column span="2">
+                        <b:message for="txtPassword"/>
+                    </b:column>
+                </b:row>
+
+                <b:row>
+
+                    <b:column span="3" offset="5">
+                        <b:commandButton value="Ingresar" actionListener="#{loginMB.login()}" look="primary" style="width:100%" />
+                    </b:column>             
+
+                </b:row>
+
+
+            </b:container>
+        </h:form>
+    </ui:define>
+</ui:composition>
