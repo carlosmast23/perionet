@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/template/plantillaAdmin.xhtml"
+                xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+                >
+
+    <ui:define name="contenido">
+        <b:container fluid="true">
+            <b:panelGrid colSpans="1,11" >
+
+                <h:outputLabel value="Cedula:" />
+                <b:inputText span="2" placeholder="CI/Pasaporte"  />
+
+                <h:outputLabel value="Nombres:" />
+                <b:inputText span="4"  placeholder="Nombres Y Apellidos"/>
+
+                <h:outputLabel value="HCL:" />
+                <b:inputText span="2"  placeholder="Numero de Historial Clinico"/>
+                
+            </b:panelGrid>
+        </b:container>
+    </ui:define>
+</ui:composition>

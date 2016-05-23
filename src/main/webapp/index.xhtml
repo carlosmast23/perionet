@@ -10,17 +10,65 @@
                 >
 
     <ui:define name="contenido">
+        <b:container fluid="true">
 
-        <b:jumbotron>
-            <b:image name="image" value="#{facesContext.externalContext.requestContextPath}/resources/img/logo.png" />
-            <img width="50%" height="50%" src="#{facesContext.externalContext.requestContextPath}/resources/img/logo.png" align="top"/>  
+            <b:row>
+                <b:column offset="1" span="10">
+                    <b:thumbnail>
+                        <img width="80%" src="#{facesContext.externalContext.requestContextPath}/resources/img/logo.png" align="top"/>
+                    </b:thumbnail>
+                </b:column>
+            </b:row>
 
-            <h1>Perionet (Software de Periodontrograma)</h1>
-            <p> El software multiplataforma permite agilizar los calculos</p>
-            <p> Tesis de Odontologia de la Universidad Central del Ecuador</p>
-            <p>
-                <a href="https://github.com/TheCoder4eu/BootsFaces-examples/blob/master/src/main/webapp/starter_template.xhtml" class="btn btn-lg btn-info">View Page Source »</a>
-            </p>
-        </b:jumbotron>
+            <b:row>
+                <b:column offset="4" span="8">
+                    <h:outputText value="Perionet (Software de Periodontrograma)" />                    
+                </b:column>
+
+                <b:column>
+                    <br/>
+                </b:column>
+
+
+                <b:column offset="2" span="8">
+                    <h:outputLabel value="El periodontograma es la ficha clínica en la que quedan reflejados los resultados más relevantes de la exploración dental y periodontal."/>
+                </b:column>
+            </b:row>
+            
+            <b:row>
+                <b:column>
+                    <br/><br/>
+                </b:column>
+            </b:row>
+
+            <b:row>
+                
+                <b:column offset="2">                    
+                    <b:label text="Auspiciado por: " severity="primary"/>
+                </b:column>
+            </b:row>
+
+            <b:row>
+                <b:column offset="3" span="3">
+                    <b:thumbnail style="border: 0px">
+                        <img width="30%" src="#{facesContext.externalContext.requestContextPath}/resources/img/selloUCE.jpg" align="top"/>                        
+                    </b:thumbnail>
+
+                </b:column>
+                
+                <b:column offset="0" span="3">
+
+                    <b:thumbnail style="border: 0px">
+                        <img width="30%" src="#{facesContext.externalContext.requestContextPath}/resources/img/uceOdontologia.PNG" align="top"/>
+                    </b:thumbnail>
+
+                </b:column>
+
+            </b:row>
+
+
+
+        </b:container>
+
     </ui:define>
 </ui:composition>
