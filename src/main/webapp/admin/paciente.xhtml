@@ -7,22 +7,97 @@
                 xmlns:b="http://bootsfaces.net/ui"
                 template="/template/plantillaAdmin.xhtml"
                 xmlns:cc="http://xmlns.jcp.org/jsf/composite"
-                >
 
-    <ui:define name="contenido">
-        <b:container fluid="true">
-            <b:panelGrid colSpans="1,11" >
+                xmlns:p="http://primefaces.org/ui">
 
-                <h:outputLabel value="Cedula:" />
-                <b:inputText span="2" placeholder="CI/Pasaporte"  />
+    <ui:define name="contenido">            
 
-                <h:outputLabel value="Nombres:" />
-                <b:inputText span="4"  placeholder="Nombres Y Apellidos"/>
+        <b:container>
+            <h:form>
+                <b:row>
+                    <b:column offset="2" span="4">
+                        <p:commandButton
+                            actionListener="#{pacienteMB.abrirDialogoPaciente()}"                           
+                            value="Nuevo"
+                            styleClass="btn_azul"
+                            icon="ui-icon-plus"
+                            
+                                               
+                            />
+                    </b:column>
 
-                <h:outputLabel value="HCL:" />
-                <b:inputText span="2"  placeholder="Numero de Historial Clinico"/>
-                
-            </b:panelGrid>
+                    <b:column  span="4">
+                        <b:commandButton value="Editar" look="info" style="width: 100%" icon="glyphicon-pencil" />
+                    </b:column>
+
+                </b:row>
+            </h:form>
         </b:container>
+
+        <div style="height: 50px;border: 5px"/>
+
+        <b:container>
+            <b:dataTable value="#{carPool.carPool}" var="car" id="bcarPool" styleClass="table table-striped table-bordered"
+                         style="width:100%">
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Cedula" />
+                    </f:facet>
+                    <h:outputText value="#{car.brand}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nombres" />
+                    </f:facet>
+                    <h:inputText value="#{car.type}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="HCL" />
+                    </f:facet>
+                    <h:inputText value="#{car.type}" />
+                </h:column>
+
+            </b:dataTable>
+        </b:container>
+        <!-- Dialogo para grabar el paciente -->
+        <p:dialog header="Nuevo Paciente" widgetVar="dlgNuevoPaciente" minHeight="40" modal="true" >
+            <h:form>
+                <b:container>
+                    <b:row>
+                        <b:column offset="4" span="4">                            
+                            <b:inputText value="ad" style="width: 100%" placeholder="Cedula/RUC" />
+                        </b:column>
+                    </b:row>
+
+                    <b:row>
+                        <b:column offset="4" span="4">                            
+                            <b:inputText value="ad" style="width: 100%" placeholder="Nombre y Apellidos" />
+                        </b:column>
+                    </b:row>
+
+                    <b:row>
+                        <b:column offset="4" span="4">                            
+                            <b:inputText value="ad" style="width: 100%" placeholder="HCL" />
+                        </b:column>
+                    </b:row>
+
+                    <b:row>
+                        <b:column offset="4" span="2">                            
+                            <b:commandButton value="Guardar" look="primary" style="width: 100%"  />
+                        </b:column>
+
+                        <b:column span="2">                            
+                            <b:commandButton value="Cancelar" look="warning" style="width: 100%"  />
+                        </b:column>
+
+                    </b:row>
+                </b:container>
+            </h:form>
+        </p:dialog>
+
     </ui:define>
 </ui:composition>
