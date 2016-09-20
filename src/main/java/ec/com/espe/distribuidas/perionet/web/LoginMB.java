@@ -33,17 +33,20 @@ public class LoginMB implements Serializable {
 
     }
 
-    public void login() {
+    public String login() {
         System.out.println("verificando el login");
         if (usuarioServicio.login(nick, clave)) {
             System.out.println("accedio");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("...", "Bienvenido al Sistema Perionet"));
+            return "indexAdmin";
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("...", "Los datos son incorrectos"));
             System.out.println("no accedio");
+            return "login";
         }
+        
     }
 
     ///////////////// METODOS GET AND SET/////////////////

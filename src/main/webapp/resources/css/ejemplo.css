@@ -1,0 +1,96 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 02-jun-2016, 10:21:41
+    Author     : carlo
+*/
+
+table
+{
+    background-color: #2b6598;
+}
+
+table tr
+{
+    background-color: #8CC152;    
+    padding: 10px;
+}
+
+
+.tabla tr td h1
+{
+    color: red;    
+    padding: 20px;
+}
+
+.tabla tr td
+{
+    color: white;    
+    padding: 0px;
+}
+
+.panel
+{
+    background-color: #c3322e;    
+    padding: 20px;
+}
+
+.fila
+{
+    background-color: #8CC152;
+    padding: 10px;
+}
+
+.columna
+{
+    background-color: aqua;
+    padding: 10px;
+}
+
+.edit
+{
+    color: salmon;
+}
+
+.edit .fila
+{
+    color: violet;
+}
+
+
+.edit .fila .columna
+{
+    color: yellow;
+}
+
+
+.ui-outputlabel
+{
+    background-color: #8CC152;
+}
+
+
+
+.columnap
+{
+    background-color: yellowgreen;
+    color: yellow;
+}
+
+.filap .ui-panelgrid-cell
+{
+    background-color: red;
+    color: red;
+    padding: 0px!important;
+}
+
+.tablap .ui-widget-content .ui-panelgrid-cell
+{
+    background-color: red;
+    color: red;
+    padding: 0px!important;
+}
+

@@ -8,6 +8,26 @@
         
         <from-view-id>*</from-view-id>
         
+        <navigation-case>
+            <from-outcome>indexAdmin</from-outcome>
+            <to-view-id>admin/indexAdmin.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>periodontograma</from-outcome>
+            <to-view-id>admin/periodontograma.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>paciente</from-outcome>
+            <to-view-id>admin/paciente.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>ayuda</from-outcome>
+            <to-view-id>admin/ayuda.xhtml</to-view-id>
+        </navigation-case>
+        
         
         <navigation-case>
             <from-outcome>acerca</from-outcome>
@@ -20,9 +40,21 @@
             <to-view-id>login.xhtml</to-view-id>
         </navigation-case>
         
+        
+        
         <navigation-case>
             <from-outcome>inicio</from-outcome>
             <to-view-id>index.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>reporte</from-outcome>
+            <to-view-id>admin/reporte.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>informe</from-outcome>
+            <to-view-id>admin/informe.xhtml</to-view-id>
         </navigation-case>
         
                 

@@ -1,0 +1,1558 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/template/plantillaAdmin.xhtml"
+                xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="contenido">            
+
+        <!-- Contenedor para Buscar la existencia de un paciente -->
+
+        <b:container>
+            <h:form id="formPrincipal">
+
+                <b:row>
+                    <b:column offset-md="4" col-md="3" offset-sm="2" col-sm="6" col-xs="8" >
+                        <b:inputText   value="#{periodontogramaMB.cedula}" placeholder="Ingrese la cedula del paciente" />
+                    </b:column>
+
+                    <b:column col-md="1" col-sm="2" col-xs="4">
+                        <p:commandButton
+                            actionListener="#{periodontogramaMB.buscarPaciente()}"
+                            update="@form,:formHistorial:idTablaHistorial"
+                            icon="fa fa-search"
+                            styleClass="btn_verde formatoBoton"
+                            title="Buscar el paciente"
+                            style="width: 100%"
+                            />
+                    </b:column>
+                </b:row>
+
+                <b:row>
+                    <b:column>
+                        <p:separator/>
+                    </b:column>
+                </b:row>
+
+                <b:row>
+                    <b:column col-md="2" col-sm="3" col-xs="6">
+                        <strong>Cedula:</strong>
+                    </b:column>
+
+                    <b:column col-md="2" col-sm="3" col-xs="6">
+                        <b:label text="#{periodontogramaMB.paciente.cedula}" severity="info" />
+                    </b:column>
+
+                    <b:column col-md="2" col-sm="3" col-xs="6">
+                        <strong>Nombre:</strong>
+                    </b:column>
+
+                    <b:column col-md="2" col-sm="3" col-xs="6">
+                        <b:label text="#{periodontogramaMB.paciente.nombres}" severity="info" />
+                    </b:column>
+
+                    <b:column col-md="2" col-sm="3" col-xs="6">
+                        <strong>HDC:</strong>
+                    </b:column>
+
+                    <b:column col-md="2" col-sm="3" col-xs="6">
+                        <b:label text="#{periodontogramaMB.paciente.hcl}" severity="info" />
+                    </b:column>
+                </b:row>
+            </h:form>
+        </b:container>
+
+        <p:separator/>
+
+        <b:accordion expanded-panels="null">
+            <b:panel id="panel1" title="Menú de Opciones" look="info">
+                <!-- Panel para crear un nuevo periodontograma -->
+
+                <h:form id="formNuevoPerio">
+                    <p:growl id="growl" showDetail="true" sticky="false" life="2500"  />  
+
+
+                    <b:container>
+                        <b:row>
+                            <b:column offset-md="4"  col-md="4" offset-sm="4" col-sm="4">
+                                <p:commandButton
+                                    id="btn_nuevo"                                    
+                                    process="@this"
+                                    actionListener="#{periodontogramaMB.nuevoPeriodontograma()}"
+                                    disabled="#{not periodontogramaMB.activarOpcionesNuevo}"
+                                    update=":formNuevoPerio:growl,tablaPeriodontograma,@this,:formHistorial:idTablaHistorial,:formReportes,:idDialogImprimir"
+                                    icon="fa fa-plus"                                                                                                          
+                                    value="Nuevo Periodontograma"
+                                    styleClass="btn_azul formatoBoton" />
+                            </b:column>
+                        </b:row>
+                    </b:container>
+
+                    <p:spacer width="10xp"/>
+
+                    <p:dataTable
+                        id="tablaPeriodontograma"
+                        value="#{periodontogramaMB.periodontogramaNuevo.detalleDienteList}"
+                        var="diente"
+                        reflow="true"
+                        paginator="true" 
+
+                        rowKey="#{diente.estado}"
+                        rows="8"
+
+                        >
+
+
+                        <f:facet name="header" >
+
+
+                            <p:panel visible="#{!periodontogramaMB.activarOpcionesNuevo}">
+                                <b:accordion expanded-panels="panel1,panel3" >
+
+                                    <b:panel id="panel1" title="Diagnostico" style="text-align: left" look="success">
+                                        <b:container>
+                                            <b:row>                                                    
+                                                <b:column col-md="3" col-sm="4" col-xs="12" >
+                                                    <b:panel title="Diagnostico">
+
+                                                        <p:outputLabel id="txtDiagnostico" value="#{periodontogramaMB.periodontogramaNuevo.diagnostico()}" style="width: 100%" />
+
+                                                    </b:panel>
+                                                </b:column>
+
+                                                <b:column col-md="4" col-sm="4" col-xs="12" >
+                                                    <b:panel title="Observaciones" >
+                                                        <f:facet name="header">
+                                                            <p:outputLabel value="Observaciones" />
+                                                        </f:facet>
+
+                                                        <p:inputTextarea value="#{periodontogramaMB.periodontogramaNuevo.diagnosticoObservaciones}" style="width: 100%">
+
+                                                        </p:inputTextarea>
+
+                                                    </b:panel>
+                                                </b:column>
+
+                                                <b:column col-md="5" col-sm="4" col-xs="12">
+
+                                                    <p:panel>
+                                                        <f:facet name="header">
+                                                            <p:outputLabel value="Tiempo de evolución" />
+                                                        </f:facet>
+
+                                                        <b:selectOneMenu value="#{periodontogramaMB.periodontogramaNuevo.diagnosticoEvolucion}"  >
+                                                            <f:selectItem itemLabel="Corto" itemValue="agudo" />
+                                                            <f:selectItem itemLabel="Largo" itemValue="crónico" />
+                                                        </b:selectOneMenu>
+
+                                                    </p:panel>
+
+                                                </b:column>
+                                            </b:row>
+
+                                        </b:container>
+                                    </b:panel>
+                                    <b:panel id="panel2" title="Plan de Tratamiento" look="success" style="text-align: left" >
+                                        <p:panel header="Plan de tratamiento para saludable" visible="#{periodontogramaMB.periodontogramaNuevo.tratamiento() ==1?'true':'false'}">
+
+                                            <h4>1.	Fase sistémica</h4>
+                                            <h4>2.  Fase higiénica</h4>
+                                            <p style="font-weight: lighter;padding-left: 40px">
+                                                -   Motivación y fisioterapia oral.
+                                            </p>
+
+                                            <p style="font-weight: lighter;padding-left: 40px">
+                                                -	Terapia básica periodontal: detartraje.  
+                                            </p>
+
+
+
+
+                                            <h4 style="font-weight: lighter;padding-left: 0px">3.	Fase de mantenimiento</h4>
+
+
+                                            <div style="padding-left: 40px">
+                                                <p:selectOneMenu value="#{periodontogramaMB.periodontogramaNuevo.tratamiento1Terapia}" id="tratamientoTerapia">
+                                                    <f:selectItem itemLabel="Terapia de mantenimiento" itemValue="" />
+                                                    <f:selectItem itemLabel="cada mes" itemValue="cada mes" />
+                                                    <f:selectItem itemLabel="cada 2 meses" itemValue="cada 2 meses" />
+                                                    <f:selectItem itemLabel="cada 3 meses" itemValue="cada 3 meses" />
+                                                    <f:selectItem itemLabel="cada 4 meses" itemValue="cada 4 meses" />
+                                                    <f:selectItem itemLabel="cada 6 meses" itemValue="cada 6 meses" />
+                                                </p:selectOneMenu>
+                                            </div>
+
+
+                                        </p:panel>
+
+                                        <p:panel id="panel4" header="Plan de tratamiento para periodontitis" style="text-align: left" visible="#{periodontogramaMB.periodontogramaNuevo.tratamiento() ==3?'true':'false'}">
+                                            <h4>1.	Fase sistémica</h4>
+                                            <p style="font-weight: lighter;padding-left: 40px">
+                                                -   Control de cualquier problema sistémico que pudiera tener el paciente.
+                                            </p>
+
+                                            <h4>2.  Fase higiénica</h4>
+                                            <p style="font-weight: lighter;padding-left: 40px">
+                                                -   Motivación y fisioterapia oral.
+                                            </p>
+
+                                            <p style="font-weight: lighter;padding-left: 40px">
+                                                -   Terapia básica periodontal: Raspado y alisado.
+                                            </p>
+
+                                            <b:container>
+
+                                                <b:row>
+                                                    <b:column offset-md="3" col-md="3" offset-sm="2" col-sm="4" col-xs="12">
+
+                                                        <b:panel title="R/R" look="info">
+                                                            <p:panelGrid columns="2">
+                                                                <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaNuevo.tratamiento3R1X1}" itemLabel="X" />
+                                                                <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaNuevo.tratamiento3R1X2}" itemLabel="X" />
+                                                                <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaNuevo.tratamiento3R1X3}" itemLabel="X" />
+                                                                <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaNuevo.tratamiento3R1X4}" itemLabel="X" />
+                                                            </p:panelGrid>
+
+                                                        </b:panel>
+
+                                                    </b:column>
+
+
+                                                    <b:column col-md="3" col-sm="4" col-xs="12">
+
+                                                        <b:panel title="R/R" look="success">
+
+                                                            <p:panelGrid columns="3" >
+                                                                <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaNuevo.tratamiento3R2X1}" itemLabel="X" />
+                                                                <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaNuevo.tratamiento3R2X2}" itemLabel="X" />
+                                                                <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaNuevo.tratamiento3R2X3}" itemLabel="X" />
+                                                                <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaNuevo.tratamiento3R2X4}" itemLabel="X" />
+                                                                <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaNuevo.tratamiento3R2X5}" itemLabel="X" />
+                                                                <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaNuevo.tratamiento3R2X6}" itemLabel="X" />
+                                                            </p:panelGrid>
+
+                                                        </b:panel>
+
+                                                    </b:column>
+                                                </b:row>                                        
+
+                                            </b:container>
+
+                                            <h4>3.  Fase correctiva</h4>
+                                            <p style="font-weight: lighter;padding-left: 40px">
+                                                -   Evaluación.
+                                            </p>
+
+                                            <p style="font-weight: lighter;padding-left: 40px">
+                                                -	Tratamiento quirúrgico: Raspado y Alisado a Campo abierto.
+                                            </p>
+
+                                            <p style="font-weight: lighter;padding-left: 40px">
+                                                -	Reevaluación 
+                                            </p>
+
+                                            <p style="font-weight: lighter;padding-left: 40px">
+                                                -	Remisiones a otras especialidades.
+                                            </p>
+
+
+                                            <b:container>
+
+                                                <b:row>
+                                                    <b:column offset-md="4" col-md="4" offset-sm ="3" col-sm="6" offset-xs="2" col-xs="8" >
+                                                        <b:selectOneMenu value="#{periodontogramaMB.periodontogramaNuevo.tratamiento3Remision}" id="typeID" required="false">
+                                                            <f:selectItem itemLabel="Endodoncia" itemValue="Endodoncia" />
+                                                            <f:selectItem itemLabel="Estética" itemValue="Estética" />
+                                                            <f:selectItem itemLabel="Implantes" itemValue="Implantes" />
+                                                            <f:selectItem itemLabel="Ortodoncia" itemValue="Ortodoncia" />
+                                                            <f:selectItem itemLabel="Rehabilitación" itemValue="Rehabilitación" />
+                                                        </b:selectOneMenu>
+
+                                                    </b:column>
+                                                </b:row>
+
+                                            </b:container>
+
+                                            <h4 >4.	Fase de mantenimiento.</h4>
+                                            <p style="font-weight: lighter;padding-left: 40px">
+                                                -	Terapia de mantenimiento 
+                                            </p>
+
+                                            <b:container>
+
+                                                <b:row>
+                                                    <b:column offset-md="4" col-md="4" offset-sm ="3" col-sm="6" offset-xs="2" col-xs="8" >
+                                                        <b:selectOneMenu value="#{periodontogramaMB.periodontogramaNuevo.tratamiento3Terapia}" id="typeID4" required="false">
+                                                            <f:selectItem itemLabel="Terapia de mantenimiento" itemValue="" />
+                                                            <f:selectItem itemLabel="cada mes" itemValue="cada mes" />
+                                                            <f:selectItem itemLabel="cada 2 meses" itemValue="cada 2 meses" />
+                                                            <f:selectItem itemLabel="cada 3 meses" itemValue="cada 3 meses" />
+                                                            <f:selectItem itemLabel="cada 4 meses" itemValue="cada 4 meses" />
+                                                            <f:selectItem itemLabel="cada 6 meses" itemValue="cada 6 meses" />
+                                                        </b:selectOneMenu>
+
+                                                    </b:column>
+                                                </b:row>
+
+                                            </b:container>
+
+
+
+                                        </p:panel>                                        
+
+
+
+                                        <p:panel id="panel3" header="Plan de tratamiento para gingivitis" style="text-align: left" visible="#{periodontogramaMB.periodontogramaNuevo.tratamiento() ==2?'true':'false'}">
+                                            <h4>1.	Fase sistémica</h4>
+                                            <p style="font-weight: lighter;padding-left: 40px">
+                                                -   Control de cualquier problema sistémico que pudiera tener el paciente.
+                                            </p>
+
+                                            <h4>2.  Fase higiénica</h4>
+                                            <p style="font-weight: lighter;padding-left: 40px">
+                                                -   Motivación y fisioterapia oral.
+                                            </p>
+
+                                            <p style="font-weight: lighter;padding-left: 40px">
+                                                - Terapia básica periodontal: detartraje.  
+                                            </p>
+
+                                            <h4>3.	Fase correctiva</h4>
+
+                                            <p style="font-weight: lighter;padding-left: 40px">
+                                                -   Remisiones a otras especialidades.
+                                            </p>
+
+                                            <div>
+                                                <p:selectOneRadio id="console2" value="#{periodontogramaMB.periodontogramaNuevo.tratamiento2Remision}" columns="3" layout="responsive" style="padding-left: 50px" >
+                                                    <f:selectItem itemLabel="Endodoncia" itemValue="Endodoncia" />
+                                                    <f:selectItem itemLabel="Estética" itemValue="Estética" />
+                                                    <f:selectItem itemLabel="Implantes" itemValue="Implantes" />
+                                                    <f:selectItem itemLabel="Ortodoncia" itemValue="Ortodoncia" />
+                                                    <f:selectItem itemLabel="Rehabilitación" itemValue="Rehabilitación" />
+                                                </p:selectOneRadio>
+                                            </div>
+
+                                            <h4>4.	Fase de mantenimiento</h4>
+
+                                            <div style="padding-left: 40px">
+                                                <p:selectOneMenu id="onemenu2" value="#{periodontogramaMB.periodontogramaNuevo.tratamiento2Fase}">
+                                                    <f:selectItem itemLabel="Terapia de mantenimiento" itemValue="" />
+                                                    <f:selectItem itemLabel="cada mes" itemValue="cada mes" />
+                                                    <f:selectItem itemLabel="cada 2 meses" itemValue="cada 2 meses" />
+                                                    <f:selectItem itemLabel="cada 3 meses" itemValue="cada 3 meses" />
+                                                    <f:selectItem itemLabel="cada 4 meses" itemValue="cada 4 meses" />
+                                                    <f:selectItem itemLabel="cada 6 meses" itemValue="cada 6 meses" />
+                                                </p:selectOneMenu>
+                                            </div>                            
+
+
+                                        </p:panel>
+
+
+                                    </b:panel>
+
+                                </b:accordion>
+
+                            </p:panel>
+
+                            <b:container>
+                                <b:row>
+
+                                    <b:column offset-md="4" col-md="2" offset-sm="3" col-sm="3" col-xs="6">
+                                        <p:commandButton
+                                            actionListener="#{periodontogramaMB.grabarPeriodontograma()}"
+                                            update="@form,:formReportes"
+                                            icon="fa fa-floppy-o"
+                                            title="Grabar periodontograma"
+                                            style="width: 100%"
+                                            disabled="#{periodontogramaMB.activarOpcionesNuevo}"
+                                            styleClass="btn_azul formatoBoton" />                          
+                                    </b:column>
+
+                                    <b:column col-md="2" col-sm="3" col-xs="6">
+                                        <p:commandButton
+                                            actionListener="#{periodontogramaMB.cancelarPeriodontograma()}"
+                                            update="tablaPeriodontograma,:formNuevoPerio:btn_nuevo"
+                                            process="@this"
+                                            icon="fa fa-ban"
+                                            title="Cancelar periodontograma"
+                                            style="width: 100%"
+                                            disabled="#{periodontogramaMB.activarOpcionesNuevo}"
+                                            styleClass="btn_tomate formatoBoton" />                          
+                                    </b:column>
+
+                                </b:row>
+                            </b:container>
+
+                        </f:facet>
+
+
+                        <p:column headerText="Codigo" priority="1" style="width: 60px;" filterMatchMode="contains" filterBy="#{diente.idDiente.codigo}">
+                            <p:outputLabel value="#{diente.idDiente.codigo} (#{diente.idDiente.categoria eq 'vestibular'?'V':diente.idDiente.categoria eq 'palatino'?'P':diente.idDiente.categoria eq 'lingual'?'L':''})"/>                      
+                        </p:column>
+
+                        
+
+                        <p:column headerText="Estado" priority="2" style="width: 120px;background-color: #{diente.estado eq 'Normal'?'yellowgreen':diente.estado eq 'Ausente'?'tomato':'yellow'}" >                        
+                            <p:selectOneMenu value="#{diente.estado}">
+                                  <p:ajax listener="#{periodontogramaMB.cambiarEstado(diente)}"  update="tablaPeriodontograma" />
+                                  <f:selectItem itemLabel="Normal" itemValue="Normal" />
+                                  <f:selectItem itemLabel="Ausente" itemValue="Ausente" />
+                                  <f:selectItem itemLabel="Implante" itemValue="Implante" />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column headerText="Imagen" priority="5" style="width: 60px">
+                            <p:commandLink actionListener="#{periodontogramaMB.abrirImagen(diente)}" update=":dialogMostrarImagen" >
+                                <p:graphicImage library="img/diente" name="#{diente.idDiente.imagen}" />
+                            </p:commandLink>
+                        </p:column>
+
+                        <p:column headerText="Opciones" priority="3" >                       
+
+                            <p:accordionPanel activeIndex="null" >
+
+                                <p:tab title="Datos Especificos">
+                                    <p:panelGrid columns="4" styleClass="panelNoBorder">
+                                        <p:outputLabel value="Dg.esp"/>
+                                        <p:outputLabel value="#{diente.diagnosticoEspecializado}" style="font-weight: lighter"/>
+
+                                        <p:outputLabel value="Pron.esp"/>
+                                        <p:outputLabel value="#{diente.pronosticoEspecializado}" style="font-weight: lighter"/>
+
+                                        <p:outputLabel value="Movilidad"/>
+                                        <p:outputLabel value="#{diente.movilidad}" style="font-weight: lighter"/>
+
+                                        <p:outputLabel value="Furca"/>
+                                        <p:outputLabel value="#{diente.furcas}" style="font-weight: lighter"/>                                                                       
+
+
+                                    </p:panelGrid>
+                                    <p:panel header="Recesiones" styleClass="panelNoBorder" >
+                                        <p:panelGrid columns="6">
+
+                                            <p:outputLabel value="SYA:" />
+                                            <p:outputLabel  value="#{diente.sullivan}" style="font-weight: lighter"/>
+
+                                            <p:outputLabel value="Miller:" />
+                                            <p:outputLabel value="#{diente.miller}" style="font-weight: lighter"/>
+
+                                            <p:outputLabel value="Prato:" />
+                                            <p:outputLabel value="#{diente.prato}" style="font-weight: lighter"/>
+
+                                        </p:panelGrid>
+                                    </p:panel>
+
+
+                                </p:tab>
+
+                                <p:tab title="Valores " transient="true">
+                                    <p:panelGrid columns="4"  >
+                                        <h:outputLabel value="MG1" style="color: red"/>
+
+                                        <h:outputLabel value="#{diente.mg11}" style="font-weight: lighter;color: red"/>
+                                        <h:outputLabel value="#{diente.mg12}" style="font-weight: lighter;color: red"/>
+                                        <h:outputLabel value="#{diente.mg13}" style="font-weight: lighter;color: red"/>
+
+                                        <h:outputLabel value="PS1" style="color: blue"/>
+
+                                        <h:outputLabel value="#{diente.ps11}" style="font-weight: lighter;color: blue"/>
+                                        <h:outputLabel value="#{diente.ps12}" style="font-weight: lighter;color: blue"/>
+                                        <h:outputLabel value="#{diente.ps13}" style="font-weight: lighter;color: blue"/>
+
+                                        <h:outputLabel value="NI1"/>
+
+                                        <h:outputLabel value="#{diente.ni11}" style="font-weight: lighter"/>
+                                        <h:outputLabel value="#{diente.ni12}" style="font-weight: lighter"/>
+                                        <h:outputLabel value="#{diente.ni13}" style="font-weight: lighter"/>
+
+
+                                        <h:outputLabel value="LMG" style="color: green"/>
+                                        <h:outputLabel value=""/>                                    
+                                        <h:outputLabel value="#{diente.lmg}" style="font-weight: lighter;color: green"/>
+                                    </p:panelGrid>
+                                </p:tab>
+
+                            </p:accordionPanel>
+
+                        </p:column>
+
+
+                        <p:column style="width: 100px">
+                            <p:commandButton 
+                                actionListener="#{periodontogramaMB.abrirDialogoValores(diente)}"
+                                process="@this"
+                                update=":formValores"
+                                value="Datos"
+                                disabled="#{diente.estado eq 'Ausente'?'true':'false'}"
+                                style="padding: 0px" 
+                                icon="fa fa-database" 
+                                styleClass="#{diente.editado eq 'true'?'btn_verde':'btn_azul'}" />
+                        </p:column>
+
+                    </p:dataTable>
+
+
+
+                </h:form>
+
+
+            </b:panel>
+
+            <b:panel id="panel2" title="Historial Periodontograma" look="success">
+                <h:form id="formHistorial">
+                    <p:panel id="panelTablaHistorial" visible="#{!periodontogramaMB.activarOpcionesEditar}">
+                        <p:dataTable 
+                            id="idTablaHistorial" 
+                            paginator="true"
+                            rowsPerPageTemplate="5,10,15"
+                            rows="10"
+                            reflow="true"                            
+                            value="#{periodontogramaMB.paciente.periodontogramaList}" 
+                            var="periodontograma" >
+
+                            <p:column headerText="Codigo" style="width: 100px" filterMatchMode="exact"  filterBy="#{periodontograma.idPeriodontograma}" >
+                                <p:outputLabel value="#{periodontograma.idPeriodontograma}" />
+                            </p:column>
+
+                            <p:column headerText="Paciente" >
+                                <p:outputLabel value="#{periodontograma.idPaciente.nombres}" />
+                            </p:column>
+
+                            <p:column headerText="Diagnostico">
+                                <p:outputLabel value="#{periodontograma.diagnostico}" />
+                            </p:column>
+
+                            <p:column headerText="Fecha">
+                                <p:outputLabel value="#{periodontograma.fecha}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                                </p:outputLabel>
+                            </p:column>
+
+                            <p:column headerText="Opciones" style="width: 150px">
+                                <p:panelGrid columns="1" styleClass="panelNoBorder tablaSinPadding" >
+
+                                    <p:link
+                                        id="link"            
+                                        outcome="reporte"
+                                        value="Periodontograma"
+                                        style="color:#005580;font-weight: bold "
+                                        target="_blank"
+                                        >
+                                        <f:param  name="codigo" value="#{periodontograma.idPeriodontograma}" />
+                                    </p:link>
+
+
+
+                                    <p:link
+                                        id="link2"            
+                                        outcome="informe"
+                                        value="Plan de tratamiento"
+                                        style="color: forestgreen;font-weight: bold"
+                                        target="_blank"
+                                        >
+                                        <f:param  name="codigo" value="#{periodontograma.idPeriodontograma}" />
+                                    </p:link>
+
+                                    <p:commandButton
+                                        actionListener="#{periodontogramaMB.editarPeriodontograma(periodontograma)}"
+                                        update=":formHistorial:panelTablaEditar,:formHistorial:panelTablaHistorial,:formHistorial:tablaPeriodontogramaEditar"
+                                        value="editar"
+                                        style="padding: 0px;width: 100%"
+                                        styleClass="btn_azul "
+                                        icon="fa fa-pencil"
+
+                                        />
+
+
+
+
+                                </p:panelGrid>
+                            </p:column>
+
+                        </p:dataTable>
+                    </p:panel>
+
+                    <!-- Tabla que me permite editar los periodontogramas -->
+                    <p:panel id="panelTablaEditar" visible="#{periodontogramaMB.activarOpcionesEditar}">
+                        <p:dataTable
+
+                            id="tablaPeriodontogramaEditar"
+                            value="#{periodontogramaMB.periodontogramaEditar.detalleDienteList}"
+                            var="diente"
+                            reflow="true"
+                            paginator="true" 
+
+                            rowKey="#{diente.estado}"
+                            rows="8"
+                            >
+
+                            <f:facet name="header" >
+
+                                <div style="background-color: #005580">
+                                    <h:outputLabel style="font-weight: bold;font-size: 14px;color: white;padding: 5px" value="Editar Periodontograma (#{periodontogramaMB.periodontogramaEditar.idPeriodontograma})" />
+                                </div>
+                                <p:panel>
+                                    <b:accordion expanded-panels="panel1,panel3" >
+
+                                        <b:panel id="panel1" title="Diagnostico" style="text-align: left" look="success">
+                                            <b:container>
+                                                <b:row>                                                    
+                                                    <b:column col-md="3" col-sm="4" col-xs="12" >
+                                                        <b:panel title="Diagnostico">
+
+                                                            <p:outputLabel id="txtDiagnostico" value="#{periodontogramaMB.periodontogramaEditar.diagnostico()}" style="width: 100%" />
+
+                                                        </b:panel>
+                                                    </b:column>
+
+                                                    <b:column col-md="4" col-sm="4" col-xs="12" >
+                                                        <b:panel title="Observaciones" >
+                                                            <f:facet name="header">
+                                                                <p:outputLabel value="Observaciones" />
+                                                            </f:facet>
+
+                                                            <p:inputTextarea value="#{periodontogramaMB.periodontogramaEditar.diagnosticoObservaciones}" style="width: 100%">
+
+                                                            </p:inputTextarea>
+
+                                                        </b:panel>
+                                                    </b:column>
+
+                                                    <b:column col-md="5" col-sm="4" col-xs="12">
+
+                                                        <p:panel>
+                                                            <f:facet name="header">
+                                                                <p:outputLabel value="Tiempo de evolución" />
+                                                            </f:facet>
+
+                                                            <b:selectOneMenu value="#{periodontogramaMB.periodontogramaEditar.diagnosticoEvolucion}"  >
+                                                                <f:selectItem itemLabel="Corto" itemValue="agudo" />
+                                                                <f:selectItem itemLabel="Largo" itemValue="crónico" />
+                                                            </b:selectOneMenu>
+
+                                                        </p:panel>
+
+                                                    </b:column>
+                                                </b:row>
+
+                                            </b:container>
+                                        </b:panel>
+                                        <b:panel id="panel2" title="Plan de Tratamiento" look="success" style="text-align: left" >
+                                            <p:panel header="Plan de tratamiento para saludable" visible="#{periodontogramaMB.periodontogramaEditar.tratamiento() ==1?'true':'false'}">
+
+                                                <h4>1.	Fase sistémica</h4>
+                                                <h4>2.  Fase higiénica</h4>
+                                                <p style="font-weight: lighter;padding-left: 40px">
+                                                    -   Motivación y fisioterapia oral.
+                                                </p>
+
+                                                <p style="font-weight: lighter;padding-left: 40px">
+                                                    -	Terapia básica periodontal: detartraje.  
+                                                </p>
+
+
+
+
+                                                <h4 style="font-weight: lighter;padding-left: 0px">3.	Fase de mantenimiento</h4>
+
+
+                                                <div style="padding-left: 40px">
+                                                    <p:selectOneMenu value="#{periodontogramaMB.periodontogramaEditar.tratamiento1Terapia}" id="tratamientoTerapia">
+                                                        <f:selectItem itemLabel="Terapia de mantenimiento" itemValue="" />
+                                                        <f:selectItem itemLabel="cada mes" itemValue="cada mes" />
+                                                        <f:selectItem itemLabel="cada 2 meses" itemValue="cada 2 meses" />
+                                                        <f:selectItem itemLabel="cada 3 meses" itemValue="cada 3 meses" />
+                                                        <f:selectItem itemLabel="cada 4 meses" itemValue="cada 4 meses" />
+                                                        <f:selectItem itemLabel="cada 6 meses" itemValue="cada 6 meses" />
+                                                    </p:selectOneMenu>
+                                                </div>
+
+
+                                            </p:panel>
+
+                                            <p:panel id="panel4" header="Plan de tratamiento para periodontitis" style="text-align: left" visible="#{periodontogramaMB.periodontogramaEditar.tratamiento() ==3?'true':'false'}">
+                                                <h4>1.	Fase sistémica</h4>
+                                                <p style="font-weight: lighter;padding-left: 40px">
+                                                    -   Control de cualquier problema sistémico que pudiera tener el paciente.
+                                                </p>
+
+                                                <h4>2.  Fase higiénica</h4>
+                                                <p style="font-weight: lighter;padding-left: 40px">
+                                                    -   Motivación y fisioterapia oral.
+                                                </p>
+
+                                                <p style="font-weight: lighter;padding-left: 40px">
+                                                    -   Terapia básica periodontal: Raspado y alisado.
+                                                </p>
+
+                                                <b:container>
+
+                                                    <b:row>
+                                                        <b:column offset-md="3" col-md="3" offset-sm="2" col-sm="4" col-xs="12">
+
+                                                            <b:panel title="R/R" look="info">
+                                                                <p:panelGrid columns="2">
+                                                                    <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaEditar.tratamiento3R1X1}" itemLabel="X" />
+                                                                    <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaEditar.tratamiento3R1X2}" itemLabel="X" />
+                                                                    <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaEditar.tratamiento3R1X3}" itemLabel="X" />
+                                                                    <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaEditar.tratamiento3R1X4}" itemLabel="X" />
+                                                                </p:panelGrid>
+
+                                                            </b:panel>
+
+                                                        </b:column>
+
+
+                                                        <b:column col-md="3" col-sm="4" col-xs="12">
+
+                                                            <b:panel title="R/R" look="success">
+
+                                                                <p:panelGrid columns="3" >
+                                                                    <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaEditar.tratamiento3R2X1}" itemLabel="X" />
+                                                                    <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaEditar.tratamiento3R2X2}" itemLabel="X" />
+                                                                    <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaEditar.tratamiento3R2X3}" itemLabel="X" />
+                                                                    <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaEditar.tratamiento3R2X4}" itemLabel="X" />
+                                                                    <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaEditar.tratamiento3R2X5}" itemLabel="X" />
+                                                                    <p:selectBooleanCheckbox value="#{periodontogramaMB.periodontogramaEditar.tratamiento3R2X6}" itemLabel="X" />
+                                                                </p:panelGrid>
+
+                                                            </b:panel>
+
+                                                        </b:column>
+                                                    </b:row>                                        
+
+                                                </b:container>
+
+                                                <h4>3.  Fase correctiva</h4>
+                                                <p style="font-weight: lighter;padding-left: 40px">
+                                                    -   Evaluación.
+                                                </p>
+
+                                                <p style="font-weight: lighter;padding-left: 40px">
+                                                    -	Tratamiento quirúrgico: Raspado y Alisado a Campo abierto.
+                                                </p>
+
+                                                <p style="font-weight: lighter;padding-left: 40px">
+                                                    -	Reevaluación 
+                                                </p>
+
+                                                <p style="font-weight: lighter;padding-left: 40px">
+                                                    -	Remisiones a otras especialidades.
+                                                </p>
+
+
+                                                <b:container>
+
+                                                    <b:row>
+                                                        <b:column offset-md="4" col-md="4" offset-sm ="3" col-sm="6" offset-xs="2" col-xs="8" >
+                                                            <b:selectOneMenu value="#{periodontogramaMB.periodontogramaEditar.tratamiento3Remision}" id="typeID" required="false">
+                                                                <f:selectItem itemLabel="Endodoncia" itemValue="Endodoncia" />
+                                                                <f:selectItem itemLabel="Estética" itemValue="Estética" />
+                                                                <f:selectItem itemLabel="Implantes" itemValue="Implantes" />
+                                                                <f:selectItem itemLabel="Ortodoncia" itemValue="Ortodoncia" />
+                                                                <f:selectItem itemLabel="Rehabilitación" itemValue="Rehabilitación" />
+                                                            </b:selectOneMenu>
+
+                                                        </b:column>
+                                                    </b:row>
+
+                                                </b:container>
+
+                                                <h4 >4.	Fase de mantenimiento.</h4>
+                                                <p style="font-weight: lighter;padding-left: 40px">
+                                                    -	Terapia de mantenimiento 
+                                                </p>
+
+                                                <b:container>
+
+                                                    <b:row>
+                                                        <b:column offset-md="4" col-md="4" offset-sm ="3" col-sm="6" offset-xs="2" col-xs="8" >
+                                                            <b:selectOneMenu value="#{periodontogramaMB.periodontogramaEditar.tratamiento3Terapia}" id="typeID4" required="false">
+                                                                <f:selectItem itemLabel="Terapia de mantenimiento" itemValue="" />
+                                                                <f:selectItem itemLabel="cada mes" itemValue="cada mes" />
+                                                                <f:selectItem itemLabel="cada 2 meses" itemValue="cada 2 meses" />
+                                                                <f:selectItem itemLabel="cada 3 meses" itemValue="cada 3 meses" />
+                                                                <f:selectItem itemLabel="cada 4 meses" itemValue="cada 4 meses" />
+                                                                <f:selectItem itemLabel="cada 6 meses" itemValue="cada 6 meses" />
+                                                            </b:selectOneMenu>
+
+                                                        </b:column>
+                                                    </b:row>
+
+                                                </b:container>
+
+
+
+                                            </p:panel>                                        
+
+
+
+                                            <p:panel id="panel3" header="Plan de tratamiento para gingivitis" style="text-align: left" visible="#{periodontogramaMB.periodontogramaEditar.tratamiento() ==2?'true':'false'}">
+                                                <h4>1.	Fase sistémica</h4>
+                                                <p style="font-weight: lighter;padding-left: 40px">
+                                                    -   Control de cualquier problema sistémico que pudiera tener el paciente.
+                                                </p>
+
+                                                <h4>2.  Fase higiénica</h4>
+                                                <p style="font-weight: lighter;padding-left: 40px">
+                                                    -   Motivación y fisioterapia oral.
+                                                </p>
+
+                                                <p style="font-weight: lighter;padding-left: 40px">
+                                                    - Terapia básica periodontal: detartraje.  
+                                                </p>
+
+                                                <h4>3.	Fase correctiva</h4>
+
+                                                <p style="font-weight: lighter;padding-left: 40px">
+                                                    -   Remisiones a otras especialidades.
+                                                </p>
+
+                                                <div>
+                                                    <p:selectOneRadio id="console2" value="#{periodontogramaMB.periodontogramaEditar.tratamiento2Remision}" columns="3" layout="responsive" style="padding-left: 50px" >
+                                                        <f:selectItem itemLabel="Endodoncia" itemValue="Endodoncia" />
+                                                        <f:selectItem itemLabel="Estética" itemValue="Estética" />
+                                                        <f:selectItem itemLabel="Implantes" itemValue="Implantes" />
+                                                        <f:selectItem itemLabel="Ortodoncia" itemValue="Ortodoncia" />
+                                                        <f:selectItem itemLabel="Rehabilitación" itemValue="Rehabilitación" />
+                                                    </p:selectOneRadio>
+                                                </div>
+
+                                                <h4>4.	Fase de mantenimiento</h4>
+
+                                                <div style="padding-left: 40px">
+                                                    <p:selectOneMenu id="onemenu2" value="#{periodontogramaMB.periodontogramaEditar.tratamiento2Fase}">
+                                                        <f:selectItem itemLabel="Terapia de mantenimiento" itemValue="" />
+                                                        <f:selectItem itemLabel="cada mes" itemValue="cada mes" />
+                                                        <f:selectItem itemLabel="cada 2 meses" itemValue="cada 2 meses" />
+                                                        <f:selectItem itemLabel="cada 3 meses" itemValue="cada 3 meses" />
+                                                        <f:selectItem itemLabel="cada 4 meses" itemValue="cada 4 meses" />
+                                                        <f:selectItem itemLabel="cada 6 meses" itemValue="cada 6 meses" />
+                                                    </p:selectOneMenu>
+                                                </div>                            
+
+
+                                            </p:panel>
+
+
+                                        </b:panel>
+
+                                    </b:accordion>
+
+                                </p:panel>
+
+                                <b:container>
+                                    <b:row>
+
+                                        <b:column offset-md="4" col-md="2" offset-sm="3" col-sm="3" col-xs="6">
+                                            <p:commandButton
+                                                actionListener="#{periodontogramaMB.editarPeriodontograma()}"
+                                                update="@form,:formHistorial:panelTablaHistorial,:formHistorial:panelTablaEditar"
+                                                icon="fa fa-floppy-o"
+                                                title="Grabar periodontograma"
+                                                style="width: 100%"
+
+                                                styleClass="btn_azul formatoBoton" />                          
+                                        </b:column>
+
+                                        <b:column col-md="2" col-sm="3" col-xs="6">
+                                            <p:commandButton
+                                                actionListener="#{periodontogramaMB.cancelarPeriodontogramaEdit()}"
+                                                update=":formHistorial:panelTablaHistorial,:formHistorial:panelTablaEditar"
+                                                process="@this"
+                                                icon="fa fa-ban"
+                                                title="Cancelar periodontograma"
+                                                style="width: 100%"
+
+                                                styleClass="btn_tomate formatoBoton" />                          
+                                        </b:column>
+
+                                    </b:row>
+                                </b:container>
+
+                            </f:facet>
+
+
+                            <p:column headerText="Codigo" priority="1" style="width: 60px;" filterMatchMode="contains" filterBy="#{diente.idDiente.codigo}">
+                                <p:outputLabel value="#{diente.idDiente.codigo} (#{diente.idDiente.categoria eq 'vestibular'?'V':diente.idDiente.categoria eq 'palatino'?'P':diente.idDiente.categoria eq 'lingual'?'L':''})"/>                      
+                            </p:column>
+
+
+                            <p:column headerText="Estado" priority="2" style="width: 120px;background-color: #{diente.estado eq 'Normal'?'yellowgreen':diente.estado eq 'Ausente'?'tomato':'yellow'}" >                        
+                                <p:selectOneMenu value="#{diente.estado}">
+                                    <p:ajax listener="#{periodontogramaMB.cambiarEstadoEditar(diente)}"  update="tablaPeriodontogramaEditar" />
+                                    <f:selectItem itemLabel="Normal" itemValue="Normal" />
+                                      <f:selectItem itemLabel="Ausente" itemValue="Ausente" />
+                                      <f:selectItem itemLabel="Implante" itemValue="Implante" />
+                                </p:selectOneMenu>
+                            </p:column>
+
+                            <p:column headerText="Imagen" priority="5" style="width: 60px">
+                                <p:commandLink actionListener="#{periodontogramaMB.abrirImagen(diente)}" update=":dialogMostrarImagen" >
+                                    <p:graphicImage library="img/diente" name="#{diente.idDiente.imagen}" />
+                                </p:commandLink>
+                            </p:column>
+
+                            <p:column headerText="Opciones" priority="3" >                       
+
+                                <p:accordionPanel activeIndex="null" >
+
+                                    <p:tab title="Datos Especificos">
+                                        <p:panelGrid columns="4" styleClass="panelNoBorder">
+                                            <p:outputLabel value="Dg.esp"/>
+                                            <p:outputLabel value="#{diente.diagnosticoEspecializado}" style="font-weight: lighter"/>
+
+                                            <p:outputLabel value="Pron.esp"/>
+                                            <p:outputLabel value="#{diente.pronosticoEspecializado}" style="font-weight: lighter"/>
+
+                                            <p:outputLabel value="Movilidad"/>
+                                            <p:outputLabel value="#{diente.movilidad}" style="font-weight: lighter"/>
+
+                                            <p:outputLabel value="Furca"/>
+                                            <p:outputLabel value="#{diente.furcas}" style="font-weight: lighter"/>                                                                       
+
+
+                                        </p:panelGrid>
+                                        <p:panel header="Recesiones" styleClass="panelNoBorder" >
+                                            <p:panelGrid columns="6">
+
+                                                <p:outputLabel value="SYA:" />
+                                                <p:outputLabel  value="#{diente.sullivan}" style="font-weight: lighter"/>
+
+                                                <p:outputLabel value="Miller:" />
+                                                <p:outputLabel value="#{diente.miller}" style="font-weight: lighter"/>
+
+                                                <p:outputLabel value="Prato:" />
+                                                <p:outputLabel value="#{diente.prato}" style="font-weight: lighter"/>
+
+                                            </p:panelGrid>
+                                        </p:panel>
+
+
+                                    </p:tab>
+
+                                    <p:tab title="Valores " transient="true">
+                                        <p:panelGrid columns="4"  >
+                                            <h:outputLabel value="MG1" style="color: red"/>
+
+                                            <h:outputLabel value="#{diente.mg11}" style="font-weight: lighter;color: red"/>
+                                            <h:outputLabel value="#{diente.mg12}" style="font-weight: lighter;color: red"/>
+                                            <h:outputLabel value="#{diente.mg13}" style="font-weight: lighter;color: red"/>
+
+                                            <h:outputLabel value="PS1" style="color: blue"/>
+
+                                            <h:outputLabel value="#{diente.ps11}" style="font-weight: lighter;color: blue"/>
+                                            <h:outputLabel value="#{diente.ps12}" style="font-weight: lighter;color: blue"/>
+                                            <h:outputLabel value="#{diente.ps13}" style="font-weight: lighter;color: blue"/>
+
+                                            <h:outputLabel value="NI1"/>
+
+                                            <h:outputLabel value="#{diente.ni11}" style="font-weight: lighter"/>
+                                            <h:outputLabel value="#{diente.ni12}" style="font-weight: lighter"/>
+                                            <h:outputLabel value="#{diente.ni13}" style="font-weight: lighter"/>
+
+
+                                            <h:outputLabel value="LMG" style="color: green"/>
+                                            <h:outputLabel value=""/>                                    
+                                            <h:outputLabel value="#{diente.lmg}" style="font-weight: lighter;color: green"/>
+                                        </p:panelGrid>
+                                    </p:tab>
+
+                                </p:accordionPanel>
+
+                            </p:column>
+
+
+                            <p:column style="width: 100px">
+                                <p:commandButton 
+                                    actionListener="#{periodontogramaMB.abrirDialogoValores(diente)}"
+                                    style="padding: 0px;"                                    
+                                    process="@this"
+                                    update=":formValores,:dialogValor"
+                                    value="Datos"
+                                    disabled="#{diente.estado eq 'Ausente'?'true':'false'}"
+                                    
+                                    icon="fa fa-database" 
+                                    styleClass="#{diente.editado eq 'true'?'btn_verde':'btn_azul'}" />
+                            </p:column>
+
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+
+            </b:panel>
+
+        </b:accordion>
+
+
+
+
+
+
+        <!-- Dialogo para grabar los valores de cada diente -->
+        <p:dialog  id="dialogValor" widgetVar="dlgValor" header="Valores" modal="true" responsive="true" position="left top"  >
+
+            <h:form id="formValores">
+
+                <b:accordion>
+
+                    <b:panel id="panel1" title="Datos Especificos" look="primary" rendered="#{periodontogramaMB.detalleDienteGrabar.idDiente.categoria eq 'palatino'?'false':'true'}"  >
+                        <b:container>
+                            <b:row>
+                                <b:column offset-md="1" col-md="2"  col-sm="2" col-xs="4">
+                                    <b:label text="Dg.esp"/>
+                                </b:column>
+
+                                <b:column  col-md="3" col-sm="4" col-xs="8">
+                                    <b:selectOneMenu value="#{periodontogramaMB.detalleDienteGrabar.diagnosticoEspecializado}"  onchange="console.log('change');"
+                                                     onselect="console.log('select');">
+                                        <f:selectItem itemLabel="Seleccione el Dg.esp" itemValue="" />                                          
+                                          <f:selectItem itemLabel="Leve" itemValue="L" />
+                                          <f:selectItem itemLabel="Moderado" itemValue="M" />
+                                          <f:selectItem itemLabel="Severo" itemValue="S" />
+                                    </b:selectOneMenu>
+                                </b:column>
+
+                                <b:column offset-md="1" col-md="2"  col-sm="2" col-xs="4">
+                                    <b:label text="Pron.esp"/>
+                                </b:column>
+
+                                <b:column  col-md="3" col-sm="4" col-xs="8">
+                                    <b:selectOneMenu value="#{periodontogramaMB.detalleDienteGrabar.pronosticoEspecializado}"  onchange="console.log('change');"
+                                                     onselect="console.log('select');">       
+                                         <f:selectItem itemLabel="Seleccione el Pron.esp" itemValue="" /> 
+                                         <f:selectItem itemLabel="Bueno" itemValue="B" />
+                                         <f:selectItem itemLabel="Dudoso" itemValue="D" />
+                                         <f:selectItem itemLabel="Malo" itemValue="M" />
+                                        <f:selectItem itemLabel="Imposible" itemValue="I" />
+                                        <f:selectItem itemLabel="Exodoncia" itemValue="EXO" />
+
+                                    </b:selectOneMenu>
+                                </b:column>
+
+                            </b:row>
+
+                            <b:row>
+                                <b:column offset-md="1" col-md="2" col-sm="2" col-xs="4">
+                                    <b:label text="Movilidad"/>
+                                </b:column>
+
+                                <b:column  col-md="3" col-sm="4" col-xs="8">
+                                    <b:selectOneMenu value="#{periodontogramaMB.detalleDienteGrabar.movilidad}"  onchange="console.log('change');"
+                                                     onselect="console.log('select');"> 
+                                         
+                                        <f:selectItem itemLabel="Seleccione la movilidad" itemValue="" /> 
+                                         <f:selectItem itemLabel="0" itemValue="0" />
+                                         <f:selectItem itemLabel="1" itemValue="1" />
+                                         <f:selectItem itemLabel="2" itemValue="2" />
+                                        <f:selectItem itemLabel="3" itemValue="3" />
+
+                                    </b:selectOneMenu>
+                                </b:column>
+
+                                <b:column offset-md="1" col-md="2" col-sm="2" col-xs="4">
+                                    <b:label text="Furca"/>
+                                </b:column>
+
+                                <b:column  col-md="3" col-sm="4" col-xs="8">
+                                    <b:selectOneMenu value="#{periodontogramaMB.detalleDienteGrabar.furcas}"  onchange="console.log('change');"
+                                                     onselect="console.log('select');">    
+                                        
+                                          <f:selectItem itemLabel="Seleccione la furca" itemValue="" />
+                                         <f:selectItem itemLabel="Inicial" itemValue="Inicial" />
+                                         <f:selectItem itemLabel="Abierta" itemValue="Abierta" />
+                                         <f:selectItem itemLabel="Completa" itemValue="Completa" />
+
+                                    </b:selectOneMenu>
+                                </b:column>
+
+                            </b:row>
+
+                            <b:row>
+                                <b:panel title="Recesiones" look="info"  >
+                                    <b:row>                                        
+                                        <b:column col-md="2" col-sm="2" col-xs="6" >
+                                            <b:label text="Sullivan y Atkins 1968:" severity="info"  />
+                                        </b:column>
+
+                                        <b:column col-md="2" col-sm="2" col-xs="6">
+                                            <b:selectOneMenu value="#{periodontogramaMB.detalleDienteGrabar.sullivan}"  onchange="console.log('change');"
+                                                             title="Sullivan y Atkins 1968"
+                                                             placeholder="Sullivan y Atkins 1968"
+                                                             onselect="console.log('select');">
+                                                
+                                                 <f:selectItem itemLabel="Seleccione..." itemValue="" />
+                                                 <f:selectItem itemLabel="I" itemValue="I" />
+                                                 <f:selectItem itemLabel="II" itemValue="II" />
+                                                 <f:selectItem itemLabel="III" itemValue="III" />
+                                                <f:selectItem itemLabel="IV" itemValue="IV" />
+
+                                            </b:selectOneMenu>
+                                        </b:column>
+
+                                        <b:column col-md="2" col-sm="2" col-xs="6" >
+                                            <b:label text="Miller:" severity="info"  />
+                                        </b:column>
+
+                                        <b:column col-md="2" col-sm="2" col-xs="6">
+                                            <b:selectOneMenu value="#{periodontogramaMB.detalleDienteGrabar.miller}"  onchange="console.log('change');"
+                                                             placeholder="Miller"
+                                                             title="Miller"
+                                                             onselect="console.log('select');">                                          
+
+                                                 <f:selectItem itemLabel="Seleccione..." itemValue="" />
+                                                 <f:selectItem itemLabel="I" itemValue="I" />
+                                                 <f:selectItem itemLabel="II" itemValue="II" />
+                                                 <f:selectItem itemLabel="III" itemValue="III" />
+                                                <f:selectItem itemLabel="IV" itemValue="IV" />
+
+                                            </b:selectOneMenu>
+                                        </b:column>
+
+                                        <b:column col-md="2" col-sm="2" col-xs="6" >
+                                            <b:label text="Prato 2011:" severity="info"  />
+                                        </b:column>
+
+                                        <b:column col-md="2" col-sm="2" col-xs="6">
+                                            <b:selectOneMenu value="#{periodontogramaMB.detalleDienteGrabar.prato}"  onchange="console.log('change');"
+                                                             placeholder="Prato 2011"
+                                                             title="Prato 2011"
+                                                             onselect="console.log('select');">                                          
+
+                                                 <f:selectItem itemLabel="Seleccione..." itemValue="" />
+                                                 <f:selectItem itemLabel="A-" itemValue="A-" />
+                                                 <f:selectItem itemLabel="A+" itemValue="A+" />
+                                                 <f:selectItem itemLabel="B-" itemValue="B-" />
+                                                <f:selectItem itemLabel="B+" itemValue="B+" />
+
+                                            </b:selectOneMenu>
+                                        </b:column>
+                                    </b:row>
+                                </b:panel>
+                            </b:row>                           
+
+
+                        </b:container>
+                    </b:panel>
+
+                    <b:panel id="panel2" title="Valores" look="primary" >
+                        <b:container>
+
+                            <b:row >
+                                <b:column offset-md="4" col-md="2" col-sm="4" col-xs="4" style="text-align: center">
+                                    <b:selectBooleanCheckbox id="checkbox1" value="#{periodontogramaMB.detalleDienteGrabar.s1}" style="background: red"/>
+                                </b:column>
+
+                                <b:column col-md="2" col-sm="4" col-xs="4" style="text-align: center">
+                                    <b:selectBooleanCheckbox value="#{periodontogramaMB.detalleDienteGrabar.s2}" caption=""/>
+                                </b:column>
+
+                                <b:column col-md="2" col-sm="4" col-xs="4" style="text-align: center">
+                                    <b:selectBooleanCheckbox value="#{periodontogramaMB.detalleDienteGrabar.s3}" caption=""/>
+                                </b:column>
+                            </b:row>
+
+                            <b:row style="color: red">
+                                <b:column offset-md="2" col-md="2" col-xs="12">
+                                    <h:outputLabel value="MG1"/>
+                                </b:column>
+
+                                <b:column col-md="2" col-xs="4">
+                                    <p:selectOneMenu id="cmbMG11"
+                                                     onchange="calculos();"
+                                                     style="width: 100%;"
+                                                     value="#{periodontogramaMB.detalleDienteGrabar.mg11}"  
+                                                     >
+                                          
+                                          <f:selectItem itemLabel="-10" itemValue="-10" />
+                                          <f:selectItem itemLabel="-9" itemValue="-9" />
+                                          <f:selectItem itemLabel="-8" itemValue="-8" />
+                                        <f:selectItem itemLabel="-7" itemValue="-7" />
+                                          <f:selectItem itemLabel="-6" itemValue="-6" />
+                                          <f:selectItem itemLabel="-5" itemValue="-5" />
+                                        <f:selectItem itemLabel="-4" itemValue="-4" />
+                                          <f:selectItem itemLabel="-3" itemValue="-3" />
+                                          <f:selectItem itemLabel="-2" itemValue="-2" />
+                                        <f:selectItem itemLabel="-1" itemValue="-1" />
+                                          <f:selectItem itemLabel="0" itemValue="0" />
+                                          <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                          <f:selectItem itemLabel="3" itemValue="3" />
+                                          <f:selectItem itemLabel="4" itemValue="4" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+                                          
+                                    </p:selectOneMenu>
+                                </b:column>
+
+                                <b:column col-md="2" col-xs="4">
+                                    <p:selectOneMenu id="cmbMG12" value="#{periodontogramaMB.detalleDienteGrabar.mg12}"  
+                                                     style="width: 100%;"
+                                                     onchange="calculos();"
+
+                                                     > 
+                                          
+                                                                                    <f:selectItem itemLabel="-10" itemValue="-10" />
+                                          <f:selectItem itemLabel="-9" itemValue="-9" />
+                                          <f:selectItem itemLabel="-8" itemValue="-8" />
+                                        <f:selectItem itemLabel="-7" itemValue="-7" />
+                                          <f:selectItem itemLabel="-6" itemValue="-6" />
+                                          <f:selectItem itemLabel="-5" itemValue="-5" />
+                                        <f:selectItem itemLabel="-4" itemValue="-4" />
+                                          <f:selectItem itemLabel="-3" itemValue="-3" />
+                                          <f:selectItem itemLabel="-2" itemValue="-2" />
+                                        <f:selectItem itemLabel="-1" itemValue="-1" />
+                                          <f:selectItem itemLabel="0" itemValue="0" />
+                                          <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                          <f:selectItem itemLabel="3" itemValue="3" />
+                                         <f:selectItem itemLabel="4" itemValue="4" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+
+                                    </p:selectOneMenu>
+                                </b:column>
+
+                                <b:column col-md="2" col-xs="4">
+                                    <p:selectOneMenu id="cmbMG13" 
+                                                     onchange="calculos();"
+                                                     style="width: 100%;"
+                                                     value="#{periodontogramaMB.detalleDienteGrabar.mg13}"  
+                                                     >                                          
+                                                                                    <f:selectItem itemLabel="-10" itemValue="-10" />
+                                          <f:selectItem itemLabel="-9" itemValue="-9" />
+                                          <f:selectItem itemLabel="-8" itemValue="-8" />
+                                        <f:selectItem itemLabel="-7" itemValue="-7" />
+                                          <f:selectItem itemLabel="-6" itemValue="-6" />
+                                          <f:selectItem itemLabel="-5" itemValue="-5" />
+                                        <f:selectItem itemLabel="-4" itemValue="-4" />
+                                          <f:selectItem itemLabel="-3" itemValue="-3" />
+                                          <f:selectItem itemLabel="-2" itemValue="-2" />
+                                        <f:selectItem itemLabel="-1" itemValue="-1" />
+                                          <f:selectItem itemLabel="0" itemValue="0" />
+                                          <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                          <f:selectItem itemLabel="3" itemValue="3" />
+                                         <f:selectItem itemLabel="4" itemValue="4" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+
+                                    </p:selectOneMenu>
+                                </b:column>
+                            </b:row>
+
+                            <b:row style="color: blue">
+                                <b:column offset-md="2" col-md="2" col-xs="12">
+                                    <h:outputLabel value="PS1"/>
+                                </b:column>
+
+                                <b:column col-md="2" col-xs="4">
+                                    <p:selectOneMenu id="cmbPS11" 
+                                                     onchange="calculos();"
+                                                     style="width: 100%;"
+                                                     value="#{periodontogramaMB.detalleDienteGrabar.ps11}"  
+                                                     >                                          
+                                        <f:selectItem itemLabel="0" itemValue="0" />
+                                        <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                        <f:selectItem itemLabel="3" itemValue="3" />
+                                        <f:selectItem itemLabel="4" itemValue="4" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+                                        <f:selectItem itemLabel="6" itemValue="6" />
+                                        <f:selectItem itemLabel="7" itemValue="7" />
+                                        <f:selectItem itemLabel="8" itemValue="8" />
+                                        <f:selectItem itemLabel="9" itemValue="9" />
+                                        <f:selectItem itemLabel="10" itemValue="10" />
+                                        <f:selectItem itemLabel="11" itemValue="11" />
+                                        <f:selectItem itemLabel="12" itemValue="12" />
+                                        <f:selectItem itemLabel="13" itemValue="13" />
+                                        <f:selectItem itemLabel="14" itemValue="14" />
+                                        <f:selectItem itemLabel="15" itemValue="15" />
+                                    </p:selectOneMenu>
+                                </b:column>
+
+                                <b:column col-md="2" col-xs="4">
+                                    <p:selectOneMenu id="cmbPS12" 
+                                                     onchange="calculos();"
+                                                     style="width: 100%;"
+                                                     value="#{periodontogramaMB.detalleDienteGrabar.ps12}"  
+                                                     >                                          
+                                        <f:selectItem itemLabel="0" itemValue="0" />
+                                        <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                        <f:selectItem itemLabel="3" itemValue="3" />
+                                        <f:selectItem itemLabel="4" itemValue="4" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+                                        <f:selectItem itemLabel="6" itemValue="6" />
+                                        <f:selectItem itemLabel="7" itemValue="7" />
+                                        <f:selectItem itemLabel="8" itemValue="8" />
+                                        <f:selectItem itemLabel="9" itemValue="9" />
+                                        <f:selectItem itemLabel="10" itemValue="10" />
+                                        <f:selectItem itemLabel="11" itemValue="11" />
+                                        <f:selectItem itemLabel="12" itemValue="12" />
+                                        <f:selectItem itemLabel="13" itemValue="13" />
+                                        <f:selectItem itemLabel="14" itemValue="14" />
+                                        <f:selectItem itemLabel="15" itemValue="15" />
+                                    </p:selectOneMenu>
+                                </b:column>
+
+                                <b:column col-md="2" col-xs="4">
+                                    <p:selectOneMenu id="cmbPS13" 
+                                                     onchange="calculos();"
+                                                     style="width: 100%;"
+                                                     value="#{periodontogramaMB.detalleDienteGrabar.ps13}"  
+                                                     >                                          
+                                        <f:selectItem itemLabel="0" itemValue="0" />
+                                        <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                        <f:selectItem itemLabel="3" itemValue="3" />
+                                        <f:selectItem itemLabel="4" itemValue="4" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+                                        <f:selectItem itemLabel="6" itemValue="6" />
+                                        <f:selectItem itemLabel="7" itemValue="7" />
+                                        <f:selectItem itemLabel="8" itemValue="8" />
+                                        <f:selectItem itemLabel="9" itemValue="9" />
+                                        <f:selectItem itemLabel="10" itemValue="10" />
+                                        <f:selectItem itemLabel="11" itemValue="11" />
+                                        <f:selectItem itemLabel="12" itemValue="12" />
+                                        <f:selectItem itemLabel="13" itemValue="13" />
+                                        <f:selectItem itemLabel="14" itemValue="14" />
+                                        <f:selectItem itemLabel="15" itemValue="15" />
+                                    </p:selectOneMenu>
+                                </b:column>
+                            </b:row>
+
+                            <b:row>
+                                <b:column offset-md="2" col-md="2" col-xs="12">
+                                    <h:outputLabel value="NI1"/>
+                                </b:column>
+
+                                <b:column  col-md="2" col-xs="4">
+                                    <p:inputText id="idNI11" value="#{periodontogramaMB.detalleDienteGrabar.ni11}" style="width: 100%;"  />
+
+                                </b:column>
+
+                                <b:column col-md="2" col-xs="4">
+                                    <p:inputText id="idNI12" value="#{periodontogramaMB.detalleDienteGrabar.ni12}" style="width: 100%;"  />
+                                </b:column>
+
+                                <b:column col-md="2" col-xs="4">
+                                    <p:inputText id="idNI13" value="#{periodontogramaMB.detalleDienteGrabar.ni13}" style="width: 100%;"  />
+                                </b:column>
+                            </b:row>   
+
+                            <b:row style="color: green">
+                                <b:column offset-md="2" span="2" col-xs="3">
+                                    <h:outputLabel value="LMG" />
+                                </b:column>
+
+                                <b:column offset-md="2" col-md="2" col-xs="9">
+
+                                    <p:selectOneMenu value="#{periodontogramaMB.detalleDienteGrabar.lmg}"  
+                                                     disabled="#{periodontogramaMB.detalleDienteGrabar.idDiente.categoria eq 'palatino'?'true':'false'}"
+                                                     style="width: 100%;"
+                                                     onchange="console.log('change');"
+                                                     >
+                                          
+                                        <f:selectItem itemLabel="0" itemValue="0" />
+                                        <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                        <f:selectItem itemLabel="3" itemValue="3" />
+                                        <f:selectItem itemLabel="4" itemValue="4" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+                                        <f:selectItem itemLabel="6" itemValue="6" />
+                                        <f:selectItem itemLabel="7" itemValue="7" />
+                                        <f:selectItem itemLabel="8" itemValue="8" />
+                                        <f:selectItem itemLabel="9" itemValue="9" />
+                                        <f:selectItem itemLabel="10" itemValue="10" />
+
+
+                                    </p:selectOneMenu>
+                                </b:column>
+
+                            </b:row> 
+                        </b:container>
+                    </b:panel>
+                </b:accordion>
+                <b:container>
+                    <b:row>
+                        <b:column offset-md="3" col-md="3" offset-sm="2" col-sm="4"  col-xs="6">
+                            <p:commandButton 
+                                actionListener="#{periodontogramaMB.grabarDatos()}"
+                                update=":formNuevoPerio:tablaPeriodontograma,:formHistorial:tablaPeriodontogramaEditar "
+                                value="Grabar" 
+                                styleClass="btn_azul formatoBoton"/>
+                        </b:column>
+
+                        <b:column  col-md="3" col-sm="4" col-xs="6">
+                            <p:commandButton 
+                                immediate="true"
+                                actionListener="#{periodontogramaMB.cancelarDatos()}"
+                                value="Cancelar" 
+                                styleClass="btn_tomate formatoBoton"/>
+                        </b:column>
+                    </b:row>
+                </b:container>
+            </h:form>
+        </p:dialog>
+
+        <!--  Dialogo que informa cuando no existe un apciente -->
+        <p:dialog widgetVar="varInformacion" header="No existe el paciente" modal="true"  responsive="true">
+            <h:form>
+                <b:container>
+                    <b:row>
+
+                        <b:column col-md="2" offset-md="4" col-sm="4" offset-sm="2" col-xs="12">
+                            <p:commandButton 
+                                actionListener="#{periodontogramaMB.abrirNuevoPaciente()}"
+                                update=":formDialgoPaciente"
+                                styleClass="btn_azul formatoBoton"
+                                icon="fa fa-plus"
+                                title="Crear nuevo paciente"
+                                value="Nuevo"/>
+                        </b:column>
+
+                        <b:column col-md="2"  col-sm="4"  col-xs="12">
+                            <p:commandButton
+                                actionListener="#{periodontogramaMB.cerrarInformacion()}"
+                                styleClass="btn_verde formatoBoton"
+                                icon="fa fa-star"
+                                title="Regresar a la pantalla principal"
+                                value="Aceptar"/>                            
+                        </b:column>
+
+
+
+                    </b:row>
+                </b:container>
+            </h:form>
+        </p:dialog>
+
+        <!-- Dialogo para mostrar la imagen -->
+        <p:dialog  id="dialogMostrarImagen" header="#{periodontogramaMB.detalleDienteSeleccionado.idDiente.codigo}" widgetVar="dlgImagen" showEffect="explode" hideEffect="explode" responsive="true" modal="true">
+            <h:form style="text-align: center">
+
+                <h:graphicImage library="img/diente" name="#{periodontogramaMB.detalleDienteSeleccionado.idDiente.imagen}" width="100%" />
+
+            </h:form>
+        </p:dialog>
+
+        <!-- Dialogo para crear un nuevo paciente -->
+        <p:dialog widgetVar="dialogPaciente"  modal="true" showEffect="explode" hideEffect="explode" >
+            <h:form id="formDialgoPaciente">
+                <b:container>
+                    <b:row>
+                        <b:column offset="4" col-md="4" offset-sm="4" col-sm="4">
+                            <b:inputText value="#{periodontogramaMB.pacienteNuevo.cedula}" placeholder="Ingrese la cedula" />
+                        </b:column>
+                    </b:row>
+
+                    <b:row>
+                        <b:column offset="4" col-md="4" offset-sm="4" col-sm="4">
+                            <b:inputText value="#{periodontogramaMB.pacienteNuevo.nombres}" placeholder="Nombre y Apellido" />
+                        </b:column>
+                    </b:row>
+
+                    <b:row>
+                        <b:column offset="4" col-md="4" offset-sm="4" col-sm="4">
+                            <b:inputText value="#{periodontogramaMB.pacienteNuevo.hcl}" placeholder="H C L" />
+                        </b:column>
+                    </b:row>
+
+                    <b:row>
+                        <b:column offset-md="4" col-md="2" offset-sm="4" col-sm="2">
+                            <p:commandButton
+                                icon="fa fa-floppy-o"
+                                actionListener="#{periodontogramaMB.grabarPaciente()}"
+                                update=":formPrincipal"
+                                styleClass="btn_azul formatoBoton"
+                                value="Grabar" />                            
+                        </b:column>
+                        <b:column col-md="2"  col-sm="2">
+                            <p:commandButton 
+                                icon="fa fa-times"
+                                onclick="PF('dialogPaciente').hide()"
+                                styleClass="btn_tomate formatoBoton"
+                                value="Cancelar" />                            
+                        </b:column>
+                    </b:row>
+
+                </b:container>
+            </h:form>
+        </p:dialog>
+
+        <!-- Dialogo despues de grabar para imprimir -->
+        <p:dialog id="idDialogImprimir" header="Reporte" responsive="true" modal="true" widgetVar="widgetImprimir" >
+            <h:form id="formReportes">
+                <b:container>
+                    <b:row>
+                        <b:column offset-md="2" col-md="3" offset-sm="2" col-sm="4" col-xs="12" >
+                            <div style="background-color: #005580;height: 100%;padding: 10px;text-align: center">
+                                <p:link
+                                    id="link"            
+                                    outcome="reporte"
+                                    value="Periodontograma"
+                                    style="color: white;"
+                                    target="_blank"
+                                    >
+                                    <f:param  name="codigo" value="#{periodontogramaMB.codigoPeridontograma}" />
+                                </p:link>
+                            </div>
+
+
+                        </b:column>
+
+                        <b:column col-md="3" col-sm="4" col-xs="12">
+                            <div style="background-color: forestgreen;height: 100%;padding: 10px;text-align: center">
+                                <p:link
+                                    id="link2"            
+                                    outcome="informe"
+                                    value="Plan de tratamiento"
+                                    style="color: white;"
+                                    target="_blank"
+                                    >
+                                    <f:param  name="codigo" value="#{periodontogramaMB.codigoPeridontograma}" />
+                                </p:link>
+                            </div>
+
+
+
+
+                        </b:column>
+
+                        <b:column col-md="3" col-sm="4" col-xs="12">
+                            <div style="background-color: orangered;height: 100%;padding: 10px;text-align: center">
+                                <p:link
+                                    onclick="PF('widgetImprimir').hide();"
+                                    id="link3"            
+                                    value="Salir"
+                                    style="color: white;width: 200px"                                    
+                                    >
+
+                                </p:link>
+                            </div>
+
+
+
+
+
+                        </b:column>
+
+                    </b:row>
+
+                </b:container>
+            </h:form>
+        </p:dialog>
+
+
+
+
+    </ui:define>
+
+
+</ui:composition>

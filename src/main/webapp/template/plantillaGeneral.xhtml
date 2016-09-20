@@ -8,6 +8,7 @@
         <title>Project Name</title>
         <meta name="author" content="The Author"></meta>
         <h:outputStylesheet library="css" name="style.css"/>
+        <h:outputStylesheet name="grid/grid.css" library="primefaces" />
     </h:head>   
     
     <h:body style="padding: 60px;">
@@ -19,9 +20,9 @@
             <b:navBar brandHref="#" fixed="top" inverse="true" brandImg="#{facesContext.externalContext.requestContextPath}/resources/img/transparente.png" brand-img-style-class="imgLogoMenu" brand-style-class="navPrincipal" >
 
                 <b:navbarLinks>
-                    <b:navCommandLink value="Inicio" action="inicio" ></b:navCommandLink>
-                    <b:navCommandLink value="login" action="login" ></b:navCommandLink>
-                    <b:navCommandLink value="Acerca" action="acerca" ></b:navCommandLink>
+                    <b:navLink value="Inicio" outcome="inicio" ></b:navLink>
+                    <b:navLink value="login" outcome="login" ></b:navLink>
+                    <b:navLink value="Acerca" outcome="acerca" ></b:navLink>
                 </b:navbarLinks>
 
             </b:navBar>

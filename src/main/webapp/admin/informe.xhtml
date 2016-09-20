@@ -1,0 +1,280 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Perionet</title>
+
+    </h:head>
+    <h:body >
+        <f:facet name="last">
+            <h:outputStylesheet library="css" name="style.css"/>            
+        </f:facet>
+
+        <h:form style="font-size: 12px">
+            <b:panel id="panel1" title="Diagnostico" style="text-align: center" look="success">
+                <b:container style="text-align: left">
+                    <b:row>                                                    
+                        <b:column col-md="3" col-sm="4" col-xs="12" >
+                            <b:panel title="Diagnostico">
+
+                                <p:outputLabel id="txtDiagnostico" value="#{informeMB.periodontograma.diagnostico()}" style="width: 100%" />
+
+                            </b:panel>
+                        </b:column>
+
+                        <b:column col-md="4" col-sm="4" col-xs="12" >
+                            <b:panel title="Observaciones" >
+                                <f:facet name="header">
+                                    <p:outputLabel value="Observaciones" />
+                                </f:facet>
+
+                                <p:inputTextarea value="#{informeMB.periodontograma.diagnosticoObservaciones}" style="width: 100%">
+
+                                </p:inputTextarea>
+
+                            </b:panel>
+                        </b:column>
+
+                        <b:column col-md="5" col-sm="4" col-xs="12">
+
+                            <p:panel>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Tiempo de evolución" />
+                                </f:facet>
+
+                                <b:selectOneMenu value="#{informeMB.periodontograma.diagnosticoEvolucion}"  >
+                                    <f:selectItem itemLabel="agudo" itemValue="agudo" />
+                                    <f:selectItem itemLabel="crónico" itemValue="crónico" />
+                                </b:selectOneMenu>
+
+                            </p:panel>
+
+                        </b:column>
+                    </b:row>
+
+                </b:container>
+            </b:panel>
+
+            <b:panel id="panel2" title="Plan de Tratamiento" look="success" style="text-align: center" >
+                <p:panel
+                    style="text-align: left;"
+                    header="Plan de tratamiento para saludable" 
+                    visible="#{informeMB.periodontograma.tratamiento() ==1?'true':'true'}">
+
+                    <div style="padding-left: 50px">
+
+                        <h4>1.	Fase sistémica</h4>
+                        <h4>2.  Fase higiénica</h4>
+                        <p style="font-weight: lighter;padding-left: 40px">
+                            -   Motivación y fisioterapia oral.
+                        </p>
+
+                        <p style="font-weight: lighter;padding-left: 40px">
+                            -	Terapia básica periodontal: detartraje.  
+                        </p>
+
+                        <h4 style="font-weight: lighter;padding-left: 0px">3.	Fase de mantenimiento</h4>
+
+                        <div style="padding-left: 40px">
+                            <p:selectOneMenu value="#{informeMB.periodontograma.tratamiento1Terapia}" id="tratamientoTerapia">
+                                <f:selectItem itemLabel="Terapia de mantenimiento" itemValue="" />
+                                <f:selectItem itemLabel="cada mes" itemValue="cada mes" />
+                                <f:selectItem itemLabel="cada 2 meses" itemValue="cada 2 meses" />
+                                <f:selectItem itemLabel="cada 3 meses" itemValue="cada 3 meses" />
+                                <f:selectItem itemLabel="cada 4 meses" itemValue="cada 4 meses" />
+                                <f:selectItem itemLabel="cada 6 meses" itemValue="cada 6 meses" />
+                            </p:selectOneMenu>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+                </p:panel>
+
+                <p:panel id="panel4" header="Plan de tratamiento para periodontitis" style="text-align: left" visible="#{informeMB.periodontograma.tratamiento() ==3?'true':'true'}">
+                    <div style="padding-left: 50px">
+
+                        <h4>1.	Fase sistémica</h4>
+                        <p style="font-weight: lighter;padding-left: 40px">
+                            -   Control de cualquier problema sistémico que pudiera tener el paciente.
+                        </p>
+
+                        <h4>2.  Fase higiénica</h4>
+                        <p style="font-weight: lighter;padding-left: 40px">
+                            -   Motivación y fisioterapia oral.
+                        </p>
+
+                        <p style="font-weight: lighter;padding-left: 40px">
+                            -   Terapia básica periodontal: Raspado y alisado.
+                        </p>
+
+                        <b:container>
+
+                            <b:row>
+                                <b:column offset-md="3" col-md="3" offset-sm="2" col-sm="4" col-xs="12">
+
+                                    <b:panel title="R/R" look="info">
+                                        <p:panelGrid columns="2">
+                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R1X1}" itemLabel="X" />
+                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R1X2}" itemLabel="X" />
+                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R1X3}" itemLabel="X" />
+                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R1X4}" itemLabel="X" />
+                                        </p:panelGrid>
+
+                                    </b:panel>
+
+                                </b:column>
+
+
+                                <b:column col-md="3" col-sm="4" col-xs="12">
+
+                                    <b:panel title="R/R" look="success">
+
+                                        <p:panelGrid columns="3" >
+                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X1}" itemLabel="X" />
+                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X2}" itemLabel="X" />
+                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X3}" itemLabel="X" />
+                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X4}" itemLabel="X" />
+                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X5}" itemLabel="X" />
+                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X6}" itemLabel="X" />
+                                        </p:panelGrid>
+
+                                    </b:panel>
+
+                                </b:column>
+                            </b:row>                                        
+
+                        </b:container>
+
+                        <h4>3.  Fase correctiva</h4>
+                        <p style="font-weight: lighter;padding-left: 40px">
+                            -   Evaluación.
+                        </p>
+
+                        <p style="font-weight: lighter;padding-left: 40px">
+                            -	Tratamiento quirúrgico: Raspado y Alisado a Campo abierto.
+                        </p>
+
+                        <p style="font-weight: lighter;padding-left: 40px">
+                            -	Reevaluación 
+                        </p>
+
+                        <p style="font-weight: lighter;padding-left: 40px">
+                            -	Remisiones a otras especialidades.
+                        </p>
+
+
+                        <b:container>
+
+                            <b:row>
+                                <b:column offset-md="4" col-md="4" offset-sm ="3" col-sm="6" offset-xs="2" col-xs="8" >
+                                    <b:selectOneMenu value="#{informeMB.periodontograma.tratamiento3Remision}" id="typeID" required="false">
+                                        <f:selectItem itemLabel="Endodoncia" itemValue="Endodoncia" />
+                                        <f:selectItem itemLabel="Estética" itemValue="Estética" />
+                                        <f:selectItem itemLabel="Implantes" itemValue="Implantes" />
+                                        <f:selectItem itemLabel="Ortodoncia" itemValue="Ortodoncia" />
+                                        <f:selectItem itemLabel="Rehabilitación" itemValue="Rehabilitación" />
+                                    </b:selectOneMenu>
+
+                                </b:column>
+                            </b:row>
+
+                        </b:container>
+
+                        <h4 >4.	Fase de mantenimiento.</h4>
+                        <p style="font-weight: lighter;padding-left: 40px">
+                            -	Terapia de mantenimiento 
+                        </p>
+
+                        <b:container>
+
+                            <b:row>
+                                <b:column offset-md="4" col-md="4" offset-sm ="3" col-sm="6" offset-xs="2" col-xs="8" >
+                                    <b:selectOneMenu value="#{informeMB.periodontograma.tratamiento3Terapia}" id="typeID4" required="false">
+                                        <f:selectItem itemLabel="Terapia de mantenimiento" itemValue="" />
+                                        <f:selectItem itemLabel="cada mes" itemValue="cada mes" />
+                                        <f:selectItem itemLabel="cada 2 meses" itemValue="cada 2 meses" />
+                                        <f:selectItem itemLabel="cada 3 meses" itemValue="cada 3 meses" />
+                                        <f:selectItem itemLabel="cada 4 meses" itemValue="cada 4 meses" />
+                                        <f:selectItem itemLabel="cada 6 meses" itemValue="cada 6 meses" />
+                                    </b:selectOneMenu>
+
+                                </b:column>
+                            </b:row>
+
+                        </b:container>
+
+                    </div>
+
+                </p:panel>                                        
+
+
+
+                <p:panel id="panel3" header="Plan de tratamiento para gingivitis" style="text-align: left" visible="#{informeMB.periodontograma.tratamiento() ==2?'true':'true'}">
+
+                    <div style="padding-left: 50px">
+
+                        <h4>1.	Fase sistémica</h4>
+                        <p style="font-weight: lighter;padding-left: 40px">
+                            -   Control de cualquier problema sistémico que pudiera tener el paciente.
+                        </p>
+
+                        <h4>2.  Fase higiénica</h4>
+                        <p style="font-weight: lighter;padding-left: 40px">
+                            -   Motivación y fisioterapia oral.
+                        </p>
+
+                        <p style="font-weight: lighter;padding-left: 40px">
+                            - Terapia básica periodontal: detartraje.  
+                        </p>
+
+                        <h4>3.	Fase correctiva</h4>
+
+                        <p style="font-weight: lighter;padding-left: 40px">
+                            -   Remisiones a otras especialidades.
+                        </p>
+
+                        <div>
+                            <p:selectOneRadio id="console2" value="#{informeMB.periodontograma.tratamiento2Remision}" columns="3" layout="responsive" style="padding-left: 50px" >
+                                <f:selectItem itemLabel="Endodoncia" itemValue="Endodoncia" />
+                                <f:selectItem itemLabel="Estética" itemValue="Estética" />
+                                <f:selectItem itemLabel="Implantes" itemValue="Implantes" />
+                                <f:selectItem itemLabel="Ortodoncia" itemValue="Ortodoncia" />
+                                <f:selectItem itemLabel="Rehabilitación" itemValue="Rehabilitación" />
+                            </p:selectOneRadio>
+                        </div>
+
+                        <h4>4.	Fase de mantenimiento</h4>
+
+                        <div style="padding-left: 40px">
+                            <p:selectOneMenu id="onemenu2" value="#{informeMB.periodontograma.tratamiento2Fase}">
+                                <f:selectItem itemLabel="Terapia de mantenimiento" itemValue="" />
+                                <f:selectItem itemLabel="cada mes" itemValue="cada mes" />
+                                <f:selectItem itemLabel="cada 2 meses" itemValue="cada 2 meses" />
+                                <f:selectItem itemLabel="cada 3 meses" itemValue="cada 3 meses" />
+                                <f:selectItem itemLabel="cada 4 meses" itemValue="cada 4 meses" />
+                                <f:selectItem itemLabel="cada 6 meses" itemValue="cada 6 meses" />
+                            </p:selectOneMenu>
+                        </div>                            
+                    </div>
+
+                </p:panel>
+
+
+            </b:panel>
+
+
+        </h:form>
+
+    </h:body>
+</html>

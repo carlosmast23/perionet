@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -23,50 +25,67 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "usuario")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
-    @NamedQuery(name = "Usuario.findByNick", query = "SELECT u FROM Usuario u WHERE u.nick = :nick"),
-    @NamedQuery(name = "Usuario.findByClave", query = "SELECT u FROM Usuario u WHERE u.clave = :clave")})
 public class Usuario implements Serializable {
-    private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 64)
-    @Column(name = "NICK")
-    private String nick;
-    @Size(max = 64)
-    @Column(name = "CLAVE")
-    private String clave;
+    @Size(min = 1, max = 25)
+    @Column(name = "USUARIO")
+    private String usuario;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 25)
+    @Column(name = "CONTRASENA")
+    private String contrasena;
+    private static final long serialVersionUID = 1L;
+
 
     public Usuario() {
     }
 
-    public Usuario(String nick) {
-        this.nick = nick;
+
+    public Usuario(Integer id) {
+        this.id = id;
     }
 
-    public String getNick() {
-        return nick;
+    public Usuario(Integer id, String usuario, String contrasena) {
+        this.id = id;
+        this.usuario = usuario;
+        this.contrasena = contrasena;
     }
 
-    public void setNick(String nick) {
-        this.nick = nick;
+    public Integer getId() {
+        return id;
     }
 
-    public String getClave() {
-        return clave;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (nick != null ? nick.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -77,15 +96,12 @@ public class Usuario implements Serializable {
             return false;
         }
         Usuario other = (Usuario) object;
-        if ((this.nick == null && other.nick != null) || (this.nick != null && !this.nick.equals(other.nick))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "ec.com.espe.distribuidas.perionet.modelo.Usuario[ nick=" + nick + " ]";
-    }
+
     
 }

@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:b="http://bootsfaces.net/ui"
+                template="/template/plantillaAdmin.xhtml"
+                xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="contenido">
+        <div style="text-align: center">
+            <h2>Ayuda</h2>
+        </div>
+
+        <div style="padding-left: 20px">
+            <h4>Diagnóstico específico: </h4>
+            <p style="padding-left: 30px">Leve, moderado o severo. </p>
+
+            <h4>Pronóstico específico: </h4>
+            <p style="padding-left: 30px" >Se recomienda usar los pronósticos Bueno, Dudoso, Malo, Imposible o Exodoncia.</p>
+
+            <h4>Furca: </h4>
+            <p style="padding-left: 30px" >Inicial o de grado I (Hamp 1975): Pérdida horizontal de tejido periodontal de soporte menor de 3 mm. o no excede 1/3 de la anchura del diente.</p>
+
+            <div style="text-align: center">
+                <p:graphicImage library="img/ayuda" name="img1.png" width="150px" style=""/>
+            </div>
+
+            <p style="padding-left: 30px" >Abierta o grado II (Hamp 1975): Pérdida de soporte horizontal mayor a 3mm. o excede 1/3 de la anchura del diente, pero sin comprometer la totalidad de la anchura del área de la furcación.</p>
+            <div style="text-align: center">
+                <p:graphicImage library="img/ayuda" name="img2.png" width="150px" style=""/>
+            </div>
+
+            <p style="padding-left: 30px" >-	Completa o grado III (Hamp 1975): Destrucción horizontal de lado al lado de los tejidos periodontales en el área de la furcación</p>
+            <div style="text-align: center">
+                <p:graphicImage library="img/ayuda" name="img3.png" width="150px" style=""/>
+            </div>
+
+            <h4>Movilidad (Miller): </h4>
+            <p style="padding-left: 30px">Se mide con los dos extremos del mango del instrumental.</p>
+
+            <ul>
+                <li>Grado 0: No hay movilidad.</li>
+                <li>Grado 1: 1 mm de movimiento horizontal.</li>
+                <li>Grado 2: más de 2 mm de movimiento horizontal.</li>
+                <li>Grado 3: más de 3 mm de movimiento horizontal con hundimiento alveolar.</li>
+            </ul>
+
+            <h3>Recesiones: </h3>
+            <h4 style="padding-left: 30px;">Sullivan y Atkins 1968</h4>
+            <p style="padding-left: 30px;font-size: 8px" > (Imágenes: DUARTE, Cesario “Cirugía Periodontal”, Editorial Santos, 2da edición, Sao Paulo Brasil, 2010. Cap 6.)</p>
+
+            <p style="padding-left: 30px;">-	Clase I: Superficial estrecha no sobrepasa LMG.</p>
+            <p style="padding-left: 30px;">-	Clase II: Superficial ancha no sobrepasa LMG.</p>
+            <div style="text-align: center">
+                <p:graphicImage library="img/ayuda" name="img4.png" width="120px" style=""/>
+            </div>
+            <p style="padding-left: 30px;">-	Clase III: Profunda estrecha sobrepasa LMG. </p>
+            <div style="text-align: center">
+                <p:graphicImage library="img/ayuda" name="img5.png" width="120px" style=""/>
+            </div>
+            <p style="padding-left: 30px;">-	Clase IV: Profunda ancha sobrepasa  LMG</p>
+            <div style="text-align: center">
+                <p:graphicImage library="img/ayuda" name="img6.png" width="120px" style=""/>
+            </div>
+
+            <h4>Miller 1985:</h4>
+            <p style="padding-left: 30px;">-	CLASE I: No llega al LMG, sin pérdida interproximal de tejidos duros y blandos. </p>
+            <p style="padding-left: 30px;">-	CLASE II: Llega o sobrepasa el  LMG sin perdida interproximal de tejidos duros y blandos. </p>
+            <p style="padding-left: 30px;">-	CLASE III: Se extiende o sobrepasa el LMG con pérdida de soporte interproximal de tejidos duros y blandos. </p>
+            <p style="padding-left: 30px;">-	CLASE IV: Se extiende o sobrepasa el LMG con pérdida de soporte interproximal y mal posición dentaria. </p>
+
+            <h4>Prato 2011.</h4>
+            <ul>
+                <li>Clase A – : Se ve LAC, (sin escalón).</li>
+                <li>Clase A + : Se ve LAC (con escalón). </li>
+                <li>Clase B - : Sobrepasa LMG (sin escalón).</li>
+                <li>Clase B + : Sobrepasa LMG (con escalón). </li>
+            </ul>
+            
+            <h4>Margen: </h4>
+            <p style="padding-left: 30px;">Es la distancia del LAC a la porcion mas coronal de la encía libre . Si el valor es positivo indica que la encía se encuentra aumentada o bulbosa.  Si el valor es negativo indica recesión.</p>
+            
+            <h4>Profundidad de Sondaje:  </h4>
+            <p style="padding-left: 30px;">Es el valor de la distancia de margen gingival al fondo de la bolsa.</p>
+            
+            <h4>Nivel de Inserción:  </h4>
+            <p style="padding-left: 30px;">Es la distancia de LAC a fondo de bolsa. Este valor se calcula con el margen gingival y profundidad de sondaje.</p>
+            
+            <h4>Línea Mucogingival:  </h4>
+            <p style="padding-left: 30px;">Distancia existente desde la porción mas coronal de la encía libre hasta la porción mas apical de la encía adherida, es decir hasta donde inicia la mucosa oral.</p>
+            
+            <div style="height: 50px" />
+
+        </div>
+
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Perionet</title>
+
+    </h:head>
+    <h:body style="padding-top: 60px">
+        <f:facet name="last">
+            <h:outputStylesheet library="css" name="ejemplo.css"/>            
+        </f:facet>
+
+
+        <table class="tabla">
+            <tr>
+                <td><h1>Nombre</h1></td>
+                <td>Carlos</td>
+            </tr>
+            <td>Telefono:</td>
+            <td>2723434</td>
+            <tr>
+
+            </tr>
+        </table>
+
+    </h:body>
+
+    <div class="panel edit">
+        <h1>Panel</h1>
+        <div class="fila">
+            <h1>fila</h1>
+            <div class="columna">
+                <h1>Nombre</h1>
+            </div>
+        </div>
+
+        <div class="fila">
+            <h1>fila</h1>
+            <div class="columna">
+                <h1>Apellido</h1>
+            </div>
+        </div>
+
+    </div>
+
+    <p:separator/>
+
+    <p:panelGrid  columns="2" class="ejemplo">
+        <p:outputLabel value="aeiou"/>
+        <p:outputLabel value="aeiou"/>
+        <p:outputLabel value="aeiou"/>
+        <p:outputLabel value="aeiou"/>
+
+    </p:panelGrid>
+
+    <p:separator/>
+    <p:panelGrid columns="2" styleClass="tablap">
+        <p:outputLabel value="aeiou"/>
+        <p:outputLabel value="aeiou"/>
+        <p:outputLabel value="aeiou"/>
+        <p:outputLabel value="aeiou"/>
+
+    </p:panelGrid>
+    
+    
+    <p:separator/>
+    <table id="j_idt9" class="ui-panelgrid ui-widget tablap" role="grid">
+        <tbody>
+            <tr class="ui-widget-content" role="row">
+                <td role="gridcell" class="ui-panelgrid-cell">
+                    <label id="j_idt10" class="ui-outputlabel ui-widget">aeiou</label>
+                </td>
+                <td role="gridcell" class="ui-panelgrid-cell">
+                    <label id="j_idt11" class="ui-outputlabel ui-widget">aeiou</label>
+                </td>
+            </tr>
+            <tr class="ui-widget-content" role="row">
+                <td role="gridcell" class="ui-panelgrid-cell">
+                    <label id="j_idt12" class="ui-outputlabel ui-widget">aeiou</label>
+                </td>
+                <td role="gridcell" class="ui-panelgrid-cell" >
+                    <label id="j_idt13" class="ui-outputlabel ui-widget" >aeiou</label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</html>

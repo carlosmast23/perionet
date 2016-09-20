@@ -13,88 +13,180 @@
     <ui:define name="contenido">            
 
         <b:container>
-            <h:form>
+            <h:form id="formPrincipal">
                 <b:row>
-                    <b:column offset="2" span="4">
-                        <p:commandButton
+                    <b:column offset-md="5" col-md="2" offset-sm="4" col-sm="4" col-xs="12">
+                        <p:commandButton 
                             actionListener="#{pacienteMB.abrirDialogoPaciente()}"                           
-                            value="Nuevo"
-                            styleClass="btn_azul"
-                            icon="ui-icon-plus"
-                            
-                                               
+                            value="Nuevo"                         
+                            styleClass="btn_verde formatoBoton"                            
+                            icon="ui-icon-plus"                          
+
                             />
                     </b:column>
 
-                    <b:column  span="4">
-                        <b:commandButton value="Editar" look="info" style="width: 100%" icon="glyphicon-pencil" />
-                    </b:column>
+
 
                 </b:row>
+
+
+                <div style="height: 30px;border: 5px"/>
+
+
+                <p:dataTable var="paciente" value="#{pacienteMB.pacienteList}" rows="5" paginator="true" id="tablaDatos" reflow="true">
+                    <p:column headerText="Cedula" filterBy="#{paciente.cedula}" filterMatchMode="contains" >                   
+                        <h:outputText value="#{paciente.cedula}"  />
+                    </p:column>
+
+                    <p:column headerText="Nombres" filterBy="#{paciente.nombres}" filterMatchMode="contains" >
+
+                        <h:outputText value="#{paciente.nombres}" />
+                    </p:column>
+
+                    <p:column headerText="HCL">
+                        <h:outputText value="#{paciente.hcl}" />
+                    </p:column>
+
+                    <p:column headerText="Fecha">
+                        <h:outputText value="#{paciente.fecha}" >
+                            <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Acciones" style="width: 120px">
+                        <p:panelGrid columns="2">
+                            <p:commandButton 
+                                actionListener="#{pacienteMB.abrirEdialogoEditar(paciente)}"
+                                update=":formEditar"
+                                icon="fa fa-pencil" 
+                                styleClass="btn_azul" 
+                                title="Editar" />
+
+                            <p:commandButton 
+                                icon="fa fa-times" 
+                                styleClass="btn_rojo" 
+                                title="Eliminar" 
+                                update="tablaDatos"
+                                actionListener="#{pacienteMB.borrar(paciente)}" />
+                        </p:panelGrid>
+                    </p:column>
+
+                </p:dataTable>
             </h:form>
         </b:container>
 
-        <div style="height: 50px;border: 5px"/>
 
-        <b:container>
-            <b:dataTable value="#{carPool.carPool}" var="car" id="bcarPool" styleClass="table table-striped table-bordered"
-                         style="width:100%">
 
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="Cedula" />
-                    </f:facet>
-                    <h:outputText value="#{car.brand}" />
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="Nombres" />
-                    </f:facet>
-                    <h:inputText value="#{car.type}" />
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">
-                        <h:outputText value="HCL" />
-                    </f:facet>
-                    <h:inputText value="#{car.type}" />
-                </h:column>
-
-            </b:dataTable>
-        </b:container>
         <!-- Dialogo para grabar el paciente -->
         <p:dialog header="Nuevo Paciente" widgetVar="dlgNuevoPaciente" minHeight="40" modal="true" >
             <h:form>
                 <b:container>
+
                     <b:row>
-                        <b:column offset="4" span="4">                            
-                            <b:inputText value="ad" style="width: 100%" placeholder="Cedula/RUC" />
+                        <b:column span="4" offset="4">
+                            <b:inputText  
+                                value="#{pacienteMB.pacienteNuevo.cedula}"  
+                                style="width: 100%" 
+                                placeholder="Cedula/RUC" />
                         </b:column>
                     </b:row>
 
                     <b:row>
-                        <b:column offset="4" span="4">                            
-                            <b:inputText value="ad" style="width: 100%" placeholder="Nombre y Apellidos" />
+                        <b:column span="4" offset="4">
+                            <b:inputText  
+                                value="#{pacienteMB.pacienteNuevo.nombres}"
+                                style="width: 100%" 
+                                placeholder="Nombre y Apellidos" />
                         </b:column>
                     </b:row>
 
                     <b:row>
-                        <b:column offset="4" span="4">                            
-                            <b:inputText value="ad" style="width: 100%" placeholder="HCL" />
+                        <b:column span="4" offset="4">
+                            <b:inputText  
+                                value="#{pacienteMB.pacienteNuevo.hcl}"
+                                style="width: 100%" 
+                                placeholder="HCL" />
                         </b:column>
                     </b:row>
 
                     <b:row>
-                        <b:column offset="4" span="2">                            
-                            <b:commandButton value="Guardar" look="primary" style="width: 100%"  />
+                        <b:column offset-md="4" col-md="4" col-sm="6">
+                            <p:commandButton                                
+                                actionListener="#{pacienteMB.grabarPaciente()}"
+                                update=":formPrincipal:tablaDatos"
+                                value="Guardar" 
+                                styleClass="btn_azul formatoBoton"
+
+                                />
                         </b:column>
 
-                        <b:column span="2">                            
-                            <b:commandButton value="Cancelar" look="warning" style="width: 100%"  />
+                        <b:column offset-md="4" col-md="4" col-sm="6" >
+                            <p:commandButton
+                                actionListener="#{pacienteMB.cerrarDialogoNuevo()}"
+                                immediate="true"
+                                value="Cancelar" 
+                                styleClass="btn_tomate formatoBoton"  />
                         </b:column>
-
                     </b:row>
+
+
+                </b:container>
+            </h:form>
+        </p:dialog>
+
+
+        <!-- Dialogo para editar el paciente -->
+        <p:dialog header="Editar Paciente" widgetVar="dlgEditarPaciente" minHeight="40" modal="true" >
+            <h:form id="formEditar">
+                <b:container>
+
+                    <b:row>
+                        <b:column span="4" offset="4">
+                            <b:inputText  
+                                value="#{pacienteMB.pacienteEditar.cedula}"  
+                                style="width: 100%" 
+                                placeholder="Cedula/RUC" />
+                        </b:column>
+                    </b:row>
+
+                    <b:row>
+                        <b:column span="4" offset="4">
+                            <b:inputText  
+                                value="#{pacienteMB.pacienteEditar.nombres}"
+                                style="width: 100%" 
+                                placeholder="Nombre y Apellidos" />
+                        </b:column>
+                    </b:row>
+
+                    <b:row>
+                        <b:column span="4" offset="4">
+                            <b:inputText  
+                                value="#{pacienteMB.pacienteEditar.hcl}"
+                                style="width: 100%" 
+                                placeholder="HCL" />
+                        </b:column>
+                    </b:row>
+
+                    <b:row>
+                        <b:column offset-md="4" col-md="4" col-sm="6">
+                            <p:commandButton                                
+                                actionListener="#{pacienteMB.editarPaciente()}"
+                                update=":formPrincipal:tablaDatos"
+                                value="Editar" 
+                                styleClass="btn_azul formatoBoton"
+                                />
+                        </b:column>
+
+                        <b:column offset-md="4" col-md="4" col-sm="6" >
+                            <p:commandButton
+                                actionListener="#{pacienteMB.cerrarDialogoEditar()}"
+                                immediate="true"
+                                value="Cancelar" 
+                                styleClass="btn_tomate formatoBoton"  />
+                        </b:column>
+                    </b:row>
+
+
                 </b:container>
             </h:form>
         </p:dialog>

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" 
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+
+                template="/template/plantillaGeneral.xhtml"
+                xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="contenido">
+        <h:outputScript name="game.js" library="js"/>
+        <h:form >
+            <p:commandButton value="dibujar" onclick="dibujarDiente('#{facesContext.externalContext.requestContextPath}/resources/img/diente/1-1.png','-1','2','-1','0','4','3','2','6');"/>
+            <p:commandButton value="imprimir" onclick="alert('12321')" />
+        </h:form>
+
+        <img src="w3javascript.gif" onload="imprimir();" width="100" height="132"/>
+
+        <p  onclick="imprimir();">
+            <canvas    id="canvas2" width="36" height="85" style="border:1px solid #000">
+                Canvas not supported by your browser.
+            </canvas>
+        </p>
+
+
+        <p >
+            <canvas id="canvas" width="400" height="400" style="border:1px solid #000" >
+                Canvas not supported by your browser.
+            </canvas>
+        </p>
+
+
+
+    </ui:define>
+</ui:composition>

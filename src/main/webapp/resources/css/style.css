@@ -1,4 +1,4 @@
-/*
+panelSinPadding/*
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
@@ -8,17 +8,86 @@ and open the template in the editor.
     Author     : carlo
 */
 
+.ui-panel .ui-panel-content {
+    border: 0;
+    background: none;
+    padding: 0px;
+}
+
+.tablaSinPadding tbody td{
+    padding: 0px !important;
+ 
+}
+
+.panelSinPadding .ui-widget-content .ui-panelgrid-cell
+{    
+    padding: 2px 4px 2px 2px !important;
+    font-size: 7px;
+}
+
 .imgLogoMenu
 {
-      
+
+}
+
+.ui-growl
+{
+    padding-top: 40px;
+
 }
 
 .navPrincipal
 {
-    
     padding: 0px;    
     background-image: url("#{facesContext.externalContext.requestContextPath}/resources/img/logoPeque.png");
     background-repeat: no-repeat;
+}
+
+
+.filaCeleste
+{
+    background-color: #2fadd3;
+    color: white;
+}
+
+.filaRoja
+{
+    background: none repeat scroll 0 0 ;
+    background-color: #c3322e;
+    color: white;
+}
+
+.filaVerde
+{
+    background: none repeat scroll 0 0 ;
+    background-color: #459b45;
+    font-weight: bold;
+    color: white;
+}
+
+.filaAzul
+{
+    background-color: #2b6598;
+    color: white;
+}
+
+.filaNaranja
+{
+    background-color: #ec9922;
+    color: white;
+
+}
+
+.filaNegra
+{
+    background-color: black;
+    color: white;
+}
+
+.filaGris
+{
+    background-color: #666666;
+    color: white;
 }
 
 
@@ -35,7 +104,7 @@ and open the template in the editor.
     padding: 3px;
     padding-bottom: 4px;
     font-weight: lighter;
-    
+
     font-size: 14px;
 }
 
@@ -62,7 +131,7 @@ and open the template in the editor.
     padding: 3px;
     padding-bottom: 4px;
     font-weight: lighter;
-    
+
     font-size: 14px;
 }
 
@@ -89,7 +158,7 @@ and open the template in the editor.
     padding: 3px;
     padding-bottom: 4px;
     font-weight: lighter;
-    
+
     font-size: 14px;
 }
 
@@ -101,7 +170,7 @@ and open the template in the editor.
     padding-bottom: 4px;
     font-weight: lighter;
     background-image: none;
-    
+
 }
 
 ////////////////////////BOTON VERDE////////////////////
@@ -117,7 +186,7 @@ and open the template in the editor.
     padding: 3px;
     padding-bottom: 4px;
     font-weight: lighter;
-    
+
     font-size: 14px;
 }
 
@@ -144,7 +213,7 @@ and open the template in the editor.
     padding: 3px;
     padding-bottom: 4px;
     font-weight: lighter;
-    
+
     font-size: 14px;
 }
 
@@ -172,7 +241,7 @@ and open the template in the editor.
     padding: 3px;
     padding-bottom: 4px;
     font-weight: lighter;
-    
+
     font-size: 14px;
 }
 
@@ -199,7 +268,7 @@ and open the template in the editor.
     padding: 3px;
     padding-bottom: 4px;
     font-weight: lighter;
-    
+
     font-size: 14px;
 }
 
@@ -213,3 +282,21 @@ and open the template in the editor.
     background-image: none;
     font-size: 14px;
 }
+
+.formatoBoton
+{
+    width: 100%;
+    height: 38px;
+    font-size: 15px;
+    text-align: center
+
+}
+
+////////////////Cambiar el estilo de los panelGrid
+
+.panelNoBorder, .panelNoBorder tr, .panelNoBorder td{
+    border: hidden;
+    border-color: white;
+}
+
+

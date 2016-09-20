@@ -33,7 +33,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
 
     public Usuario login(String nick, String clave) {
         try {
-            String queryString = "SELECT u FROM Usuario u where u.nick=?1 And u.clave=?2";
+            String queryString = "SELECT u FROM Usuario u where u.usuario=?1 And u.contrasena=?2";
             Query query = em.createQuery(queryString);
             query.setParameter(1, nick);
             query.setParameter(2, clave);
@@ -43,7 +43,6 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         } catch (NoResultException e) {
             return null;
         }
-
+       // return null;
     }
-
 }
