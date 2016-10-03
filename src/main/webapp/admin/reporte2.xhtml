@@ -1,0 +1,191 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Perionet</title>
+        <h:outputScript name="game.js" library="js"/>
+    </h:head>
+    <h:body >
+
+
+        <f:facet name="last">
+            <h:outputStylesheet library="css" name="style.css"/>    
+
+        </f:facet>
+
+        <h:form >
+
+
+            <f:metadata>            
+                <f:viewParam name="codigo" value="#{reporteMB.codigoPeriodontograma}"/>            
+            </f:metadata>
+
+            <p:dataTable id="datos" value="#{reporteMB.filas}" var="fila" styleClass="tablaSinPadding" style="font-size: 8px" >
+
+              
+
+                <!---Dato Numero 2-->
+                <p:column headerText="">
+                    <div style="text-align: center;background-color: silver;color: black;font-size: 8px;font-weight: bold">#{fila.d2.idDiente.codigo}</div>
+                    <p:panel visible="#{fila.d2.idDiente.categoria eq 'vestibular'?'true':'false'}" >
+                        <p:panelGrid  styleClass="panelSinPadding" >
+                            <p:row>
+                                <p:column style="width: 24px;font-weight: bold">
+                                    <p:outputLabel value="Dg.Esp"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:outputLabel value="#{fila.d2.diagnosticoEspecializado}"/>
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row>
+                                <p:column style="font-weight: bold">
+                                    <p:outputLabel value="Movi"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:outputLabel value="#{fila.d2.movilidad}"/>
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row>
+
+                                <p:column style="font-weight: bold">
+                                    <p:outputLabel value="Furcas"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:outputLabel value="#{fila.d2.furcas}"/>
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row>
+
+                                <p:column style="font-weight: bold">
+                                    <p:outputLabel value="ProEsp"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:outputLabel value="#{fila.d2.pronosticoEspecializado}"/>
+                                </p:column>
+
+                            </p:row>
+
+                        </p:panelGrid>
+
+                        <p:panelGrid styleClass="panelSinPadding">
+                            <p:row>
+                                <p:column style="font-weight: bold;width: 24px;">
+                                    <p:outputLabel value="Resec"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:outputLabel value="#{fila.d2.sullivan}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:outputLabel value="#{fila.d2.miller}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:outputLabel value="#{fila.d2.prato}"/>
+                                </p:column>
+                            </p:row>
+
+                        </p:panelGrid>
+                    </p:panel>
+
+
+
+
+                    <div style="text-align: center;background-color: white">
+                        <canvas 
+                            id="campo#{fila.d2.idDiente.idDiente}" 
+                            onclick="dibujarDiente('campo#{fila.d2.idDiente.idDiente}', '#{facesContext.externalContext.requestContextPath}/resources/img/diente/#{fila.d2.idDiente.imagen}', '#{fila.d2.idDiente.posi eq 'arriba'?'1':'-1'}', '#{fila.d2.mg11}', '#{fila.d2.mg12}', '#{fila.d2.mg13}', '#{fila.d2.ps11}', ' #{fila.d2.ps12}', ' #{fila.d2.ps13}', '#{fila.d2.lmg}');"
+                            width="30px" height="74px"
+                            >
+
+                        </canvas>
+                    </div>
+
+
+                    <p:panelGrid styleClass="panelSinPadding">
+                        <p:row style="color: red">
+                            <p:column style="width: 13px;">
+                                <p:outputLabel value="MG1" />
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="#{fila.d2.mg11}"/>
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="#{fila.d2.mg12}"/>
+                            </p:column>
+                            <p:column >
+                                <p:outputLabel value="#{fila.d2.mg13}"/>
+                            </p:column>
+                        </p:row>
+
+                        <p:row style="color: blue">
+                            <p:column style="width: 13px">
+                                <p:outputLabel value="PS1"/>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel value="#{fila.d2.ps11}"/>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel value="#{fila.d2.ps12}"/>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel value="#{fila.d2.ps13}"/>
+                            </p:column>
+                        </p:row>
+
+                        <p:row style="color: black">
+                            <p:column style="width: 13px">
+                                <p:outputLabel value="NI1"/>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel value="#{fila.d2.ni11}"/>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel value="#{fila.d2.ni12}"/>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel value="#{fila.d2.ni13}"/>
+                            </p:column>
+                        </p:row>
+
+                        <p:row style="color: green">
+                            <p:column style="width: 13px">
+                                <p:outputLabel value="LMG"/>
+                            </p:column>
+                            <p:column>
+
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel value="#{fila.d2.lmg}"/>
+                            </p:column>
+                            <p:column>
+
+                            </p:column>
+                        </p:row>
+
+                    </p:panelGrid>             
+                </p:column>
+
+                
+            </p:dataTable>
+        </h:form>
+
+    </h:body>
+</html>
