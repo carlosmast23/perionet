@@ -123,7 +123,9 @@ function dibujarDiente(canvas, path, orientacion, mg1, mg2, mg3, ps1, ps2, ps3, 
 
     ps1 = parseInt(ps1);
     ps2 = parseInt(ps2);
+    
     ps3 = parseInt(ps3);
+    
     
     var psAux1=ps1;
     var psAux2=ps2;
@@ -167,7 +169,7 @@ function dibujarDiente(canvas, path, orientacion, mg1, mg2, mg3, ps1, ps2, ps3, 
 
 
     orientacion = parseInt(orientacion);
-
+   
     mg1 = parseInt(mg1) * orientacion;
     mg2 = parseInt(mg2) * orientacion;
     mg3 = parseInt(mg3) * orientacion;
@@ -183,9 +185,9 @@ function dibujarDiente(canvas, path, orientacion, mg1, mg2, mg3, ps1, ps2, ps3, 
 
     ancho = ctx.canvas.width;
     alto = ctx.canvas.height;
-
+    
     //////////////////Dibujar MG////////////////////////
-    dibujarImg(path, ctx, ancho, alto,mg1,mg2,mg3,ps1,ps2,ps3,lmg,psAux1,psAux2,psAux3);
+    dibujarImg(path, ctx, ancho, alto,orientacion,mg1,mg2,mg3,ps1,ps2,ps3,lmg,psAux1,psAux2,psAux3);
     //dibujarCuadricula(ctx, ancho, alto);
     //dibujarLineaBase(ctx, ancho, alto, orientacion);
 
@@ -377,8 +379,20 @@ function alerta(msj)
     alert(msj);
 }
 
+
 function dibujarImg(path, ctx, ancho, alto,orientacion,mg1,mg2,mg3,ps1,ps2,ps3,lmg,psAux1,psAux2,psAux3)
 {
+    //alert("orientacion"+orientacion);
+//    alert("mg1="+mg1);
+//    alert("mg2="+mg2);
+//    alert("mg3="+mg3);
+//    alert("ps1="+ps1);
+//    alert("ps2="+ps2);
+//    alert("ps3="+ps3);
+//    alert("lmg="+lmg);
+//    alert("psAux1="+psAux1);
+//    alert("psAux2="+psAux2);
+//    alert("psAux3="+psAux3);
     var img = new Image();
     //alert(path);
     img.src = path;

@@ -125,15 +125,15 @@ public class Periodontograma implements Serializable {
 
         if (!obtenerSangrado()) {
             ///Verificar si esta saludable
-            if (MGRango(-3, 0) && PSRango(0, 3)) {
+            if (MGRango(0, 3) && PSRango(0, 3)) {
                 diagnostico = "Saludable";
                 
                 //return diagnostico;
             }
         } else {
             ///Verificar Gingititis
-            if (PSRango(0, 3)) {
-                if (MGRango(-3, 3)) {
+            if (PSRango(0, 5)) {
+                if (MGRango(0, 5)) {
                     diagnostico = "Gingivitis";
                     
                 }
@@ -185,25 +185,24 @@ public class Periodontograma implements Serializable {
     public int tratamiento() {
         int tratamiento = 0;
 
-        if (!obtenerSangrado()) {
-            ///Verificar si esta saludable
-            if (MGRango(-3, 0) && PSRango(0, 3)) {
-                tratamiento = 1;
-                
-                //return diagnostico;
+        String diagsnotico=diagnostico();
+        int tamsanio=diagsnotico.indexOf("Saludable");
+        if(diagsnotico.indexOf("Saludable")>=0)
+        {
+            return 1;
+        }
+        else
+        {
+            if(diagsnotico.indexOf("Gingivitis")>=0)
+            {
+                return 2;
             }
-        } else {
-            ///Verificar Gingititis
-            if (PSRango(0, 3)) {
-                if (MGRango(-3, 3)) {
-                    tratamiento = 2;
-                    
+            else
+            {
+                if(diagsnotico.indexOf("Periodentitis")>=0)
+                {
+                    return 3;
                 }
-            } else {
-                /////Periodentitis
-                tratamiento = 3;
-                
-
             }
         }
 
