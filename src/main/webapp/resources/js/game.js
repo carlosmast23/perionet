@@ -187,7 +187,7 @@ function dibujarDiente(canvas, path, orientacion, mg1, mg2, mg3, ps1, ps2, ps3, 
     alto = ctx.canvas.height;
     
     //////////////////Dibujar MG////////////////////////
-    dibujarImg(path, ctx, ancho, alto,orientacion,mg1,mg2,mg3,ps1,ps2,ps3,lmg,psAux1,psAux2,psAux3);
+    dibujarImg(path, ctx, ancho, alto,orientacion,mg1,mg2,mg3,ps1,ps2,ps3,lmg,psAux1,psAux2,psAux3,nl1,nl2,nl3);
     //dibujarCuadricula(ctx, ancho, alto);
     //dibujarLineaBase(ctx, ancho, alto, orientacion);
 
@@ -321,7 +321,7 @@ function dibujarLineaBase(ctx, ancho, alto, orientacion)
     limite1 = ancho * 1 / 5;
     limite2 = ancho * 4 / 5;
     ctx.beginPath();
-
+    
     ctx.strokeStyle = "rgb(0,0,0)";
 
     ctx.moveTo(limite1, alto * incremento);
@@ -380,7 +380,7 @@ function alerta(msj)
 }
 
 
-function dibujarImg(path, ctx, ancho, alto,orientacion,mg1,mg2,mg3,ps1,ps2,ps3,lmg,psAux1,psAux2,psAux3)
+function dibujarImg(path, ctx, ancho, alto,orientacion,mg1,mg2,mg3,ps1,ps2,ps3,lmg,psAux1,psAux2,psAux3,nl1,nl2,nl3)
 {
     //alert("orientacion"+orientacion);
 //    alert("mg1="+mg1);
@@ -398,27 +398,47 @@ function dibujarImg(path, ctx, ancho, alto,orientacion,mg1,mg2,mg3,ps1,ps2,ps3,l
     img.src = path;
     img.onload = function(){
         ctx.drawImage(img, 0, 0, ancho, alto);
-        dibujarCuadricula(ctx, ancho, alto);
-        dibujarLineaBase(ctx, ancho, alto, orientacion);
+            
         
-        dibujarFuncion(ctx, ancho, alto, orientacion, mg1, mg2, mg3, '4');
-        dibujarFuncion(ctx, ancho, alto, orientacion, mg1 - ps1, mg2 - ps2, mg3 - ps3, '2');
-        dibujarFuncion(ctx, ancho, alto, orientacion, lmg, lmg, lmg, '1');
-        
-        if (psAux1 >= 4)
+        if(mg1==0 && mg2==0 && mg3==0 & ps1==0 && ps2==0 && ps3==0)
         {
-            dibujarIntermedio(ctx, ancho, alto,orientacion, 1, mg1, mg1 - ps1, '3');
+            ctx.strokeStyle = "rgb(53,142,0)";
+            ctx.moveTo(0,0);
+            ctx.lineTo(ancho,alto);
+            
+            ctx.moveTo(ancho,0);
+            ctx.lineTo(0,alto);
+            //ctx.lineTo(alto,0);
+            //ctx.lineTo(ancho * 4 / 5, base + y3 * incremento);
+            ctx.stroke();
         }
+        else
+        {
+            
+            dibujarCuadricula(ctx, ancho, alto); 
+            dibujarLineaBase(ctx, ancho, alto, orientacion);
 
-        if (psAux2 >= 4)
-        {
-            dibujarIntermedio(ctx, ancho, alto,orientacion, 2, mg2, mg2 - ps2, '3');
+            dibujarFuncion(ctx, ancho, alto, orientacion, mg1, mg2, mg3, '4');
+            dibujarFuncion(ctx, ancho, alto, orientacion, mg1 - ps1, mg2 - ps2, mg3 - ps3, '2');
+            dibujarFuncion(ctx, ancho, alto, orientacion, lmg, lmg, lmg, '1');
+
+            if (nl1 >= 4)
+            {
+                dibujarIntermedio(ctx, ancho, alto,orientacion, 1, mg1, mg1 - ps1, '3');
+            }
+
+            if (nl2 >= 4)
+            {
+                dibujarIntermedio(ctx, ancho, alto,orientacion, 2, mg2, mg2 - ps2, '3');
+            }
+            //alert(psAux3);
+            if (nl3 >= 4)
+            {
+                dibujarIntermedio(ctx, ancho, alto,orientacion, 3, mg3, mg3 - ps3, '3');
+            }
+            
         }
-        //alert(psAux3);
-        if (psAux3 >= 4)
-        {
-            dibujarIntermedio(ctx, ancho, alto,orientacion, 3, mg3, mg3 - ps3, '3');
-        }
+       
         
     }
 }
