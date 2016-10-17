@@ -126,6 +126,7 @@ public class Periodontograma implements Serializable {
         if (!obtenerSangrado()) {
             ///Verificar si esta saludable
             if (MGRango(0, 3) && PSRango(0, 3)) {
+            if (MGRango(0,3) && PSRango(0, 3)) {
                 diagnostico = "Saludable";
                 
                 //return diagnostico;
@@ -137,9 +138,15 @@ public class Periodontograma implements Serializable {
                     diagnostico = "Gingivitis";
                     
                 }
-            } else {
-                /////Periodentitis
-                diagnostico = "Periodentitis";
+            } else 
+            {
+                /////periodOntitis
+                diagnostico = "periodOntitis";
+                
+                /**
+                 * Agregar el tiempo de evolucion
+                 */
+                diagnostico+=" "+getDiagnosticoEvolucion();
                 
 
                 if (NiMax() >= 1 && NiMax() <= 2) {
@@ -177,7 +184,6 @@ public class Periodontograma implements Serializable {
 
             }
         }
-
         return diagnostico;
     }
     
@@ -209,26 +215,43 @@ public class Periodontograma implements Serializable {
         return tratamiento;
     }
 
+    /**
+     * Calcula el porcentaje del total de dientes que tiene
+     * por lo menos un valor en ni que este dentro del rango 
+     * @param min
+     * @param max
+     * @return 
+     */
     private Integer NiPorcetaje(Integer min, Integer max) {
         Integer rango = 0;
+        Integer dientesAusentes=0;
 
-        for (DetalleDiente detalle : detalleDienteList) {
+        for (DetalleDiente detalle : detalleDienteList) 
+        {
             if (!detalle.getEstado().equals("Ausente")) {
                 if (detalle.getNi11() >= min && detalle.getNi11() <= max) {
                     rango++;
+                    break;
                 }
 
                 if (detalle.getNi12() >= min && detalle.getNi12() <= max) {
                     rango++;
+                    break;
                 }
 
                 if (detalle.getNi13() >= min && detalle.getNi13() <= max) {
                     rango++;
+                    break;
                 }
             }
+            else
+            {
+                dientesAusentes++;
+            }
+                
         }
 
-        return (rango * 100) / (detalleDienteList.size());
+        return (rango * 100) / ((detalleDienteList.size()-dientesAusentes));
     }
 
     private boolean obtenerSangrado() {
@@ -242,6 +265,8 @@ public class Periodontograma implements Serializable {
         }
         return false;
     }
+    
+    
 
     private boolean MGRango(Integer inicio, Integer fin) {
         if (detalleDienteList != null) {
@@ -285,6 +310,10 @@ public class Periodontograma implements Serializable {
 
     }
 
+    /**
+     * Calcula el maximo valor que exista 
+     * @return 
+     */
     private Integer NiMax() {
         Integer max = -999999;
         if (detalleDienteList != null) {

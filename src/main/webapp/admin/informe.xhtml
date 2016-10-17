@@ -70,6 +70,31 @@
                     <div style="padding-left: 50px">
 
                         <h4>1.	Fase sistémica</h4>
+                        
+                        <b:panel>
+                            <b:row> 
+                                
+                                <b:column  col-md="2" col-sm="2" col-xs="5" >   
+                                    <b:selectBooleanCheckbox value="#{settingsBean.checkbox1}" caption="Remisión al Médico"/>                             
+                                </b:column>
+                                
+                                <b:column col-md="4" col-sm="5" col-xs="7" >                               
+                                    <b:inputText/>
+                                </b:column>
+                            </b:row>
+                            
+                            <b:row>                                
+                                <b:column col-md="2" col-sm="2" col-xs="5"  >                               
+                                    <b:selectBooleanCheckbox value="#{settingsBean.checkbox1}" caption="Medicación "/>                                                             
+                                </b:column>
+                                
+                                <b:column col-md="4" col-sm="5" col-xs="7">                               
+                                    <b:inputText/>
+                                </b:column>
+                            </b:row>
+                            
+                        </b:panel>
+                        
                         <h4>2.  Fase higiénica</h4>
                         <p style="font-weight: lighter;padding-left: 40px">
                             -   Motivación y fisioterapia oral.
@@ -105,6 +130,32 @@
                     <div style="padding-left: 50px">
 
                         <h4>1.	Fase sistémica</h4>
+                        
+                        <b:panel>
+                            <b:row> 
+                                
+                                <b:column  col-md="2" col-sm="2" col-xs="5" >   
+                                    <b:selectBooleanCheckbox value="#{settingsBean.checkbox1}" caption="Remisión al Médico"/>                             
+                                </b:column>
+                                
+                                <b:column col-md="4" col-sm="5" col-xs="7" >                               
+                                    <b:inputText/>
+                                </b:column>
+                            </b:row>
+                            
+                            <b:row>                                
+                                <b:column col-md="2" col-sm="2" col-xs="5"  >                               
+                                    <b:selectBooleanCheckbox value="#{settingsBean.checkbox1}" caption="Medicación "/>                                                             
+                                </b:column>
+                                
+                                <b:column col-md="4" col-sm="5" col-xs="7">                               
+                                    <b:inputText/>
+                                </b:column>
+                            </b:row>
+                            
+                        </b:panel>
+                        
+                        
                         <p style="font-weight: lighter;padding-left: 40px">
                             -   Control de cualquier problema sistémico que pudiera tener el paciente.
                         </p>
@@ -125,10 +176,10 @@
 
                                     <b:panel title="R/R" look="info">
                                         <p:panelGrid columns="2">
-                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R1X1}" itemLabel="X" />
-                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R1X2}" itemLabel="X" />
-                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R1X3}" itemLabel="X" />
-                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R1X4}" itemLabel="X" />
+                                            <b:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R1X1}" caption="X" />
+                                            <b:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R1X2}" caption="X" />
+                                            <b:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R1X3}" caption="X" />
+                                            <b:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R1X4}" caption="X" />
                                         </p:panelGrid>
 
                                     </b:panel>
@@ -141,12 +192,12 @@
                                     <b:panel title="R/R" look="success">
 
                                         <p:panelGrid columns="3" >
-                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X1}" itemLabel="X" />
-                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X2}" itemLabel="X" />
-                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X3}" itemLabel="X" />
-                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X4}" itemLabel="X" />
-                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X5}" itemLabel="X" />
-                                            <p:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X6}" itemLabel="X" />
+                                            <b:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X1}" caption="X" />
+                                            <b:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X2}" caption="X" />
+                                            <b:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X3}" caption="X" />
+                                            <b:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X4}" caption="X" />
+                                            <b:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X5}" caption="X" />
+                                            <b:selectBooleanCheckbox value="#{informeMB.periodontograma.tratamiento3R2X6}" caption="X" />
                                         </p:panelGrid>
 
                                     </b:panel>
@@ -225,6 +276,31 @@
                     <div style="padding-left: 50px">
 
                         <h4>1.	Fase sistémica</h4>
+                        
+                        <b:panel>
+                            <b:row> 
+                                
+                                <b:column  col-md="2" col-sm="2" col-xs="5" >   
+                                    <b:selectBooleanCheckbox value="#{settingsBean.checkbox1}" caption="Remisión al Médico"/>                             
+                                </b:column>
+                                
+                                <b:column col-md="4" col-sm="5" col-xs="7" >                               
+                                    <b:inputText/>
+                                </b:column>
+                            </b:row>
+                            
+                            <b:row>                                
+                                <b:column col-md="2" col-sm="2" col-xs="5"  >                               
+                                    <b:selectBooleanCheckbox value="#{settingsBean.checkbox1}" caption="Medicación "/>                                                             
+                                </b:column>
+                                
+                                <b:column col-md="4" col-sm="5" col-xs="7">                               
+                                    <b:inputText/>
+                                </b:column>
+                            </b:row>
+                            
+                        </b:panel>
+                        
                         <p style="font-weight: lighter;padding-left: 40px">
                             -   Control de cualquier problema sistémico que pudiera tener el paciente.
                         </p>
@@ -245,13 +321,18 @@
                         </p>
 
                         <div>
-                            <p:selectOneRadio id="console2" value="#{informeMB.periodontograma.tratamiento2Remision}" columns="3" layout="responsive" style="padding-left: 50px" >
-                                <f:selectItem itemLabel="Endodoncia" itemValue="Endodoncia" />
-                                <f:selectItem itemLabel="Estética" itemValue="Estética" />
-                                <f:selectItem itemLabel="Implantes" itemValue="Implantes" />
-                                <f:selectItem itemLabel="Ortodoncia" itemValue="Ortodoncia" />
-                                <f:selectItem itemLabel="Rehabilitación" itemValue="Rehabilitación" />
-                            </p:selectOneRadio>
+                                                       
+                            <b:row>
+                                <b:column col-md="4">
+                                <b:selectOneMenu id="console2" value="#{informeMB.periodontograma.tratamiento2Remision}" style="padding-left: 50px" >
+                                    <f:selectItem itemLabel="Endodoncia" itemValue="Endodoncia" />
+                                    <f:selectItem itemLabel="Estética" itemValue="Estética" />
+                                    <f:selectItem itemLabel="Implantes" itemValue="Implantes" />
+                                    <f:selectItem itemLabel="Ortodoncia" itemValue="Ortodoncia" />
+                                    <f:selectItem itemLabel="Rehabilitación" itemValue="Rehabilitación" />
+                                </b:selectOneMenu>
+                                </b:column>
+                            </b:row>
                         </div>
 
                         <h4>4.	Fase de mantenimiento</h4>
