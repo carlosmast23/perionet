@@ -126,28 +126,25 @@ public class Periodontograma implements Serializable {
         if (!obtenerSangrado()) {
             ///Verificar si esta saludable
             if (MGRango(0, 3) && PSRango(0, 3)) {
-            if (MGRango(0,3) && PSRango(0, 3)) {
-                diagnostico = "Saludable";
-                
-                //return diagnostico;
-            }
-        } else {
-            ///Verificar Gingititis
+                if (MGRango(0, 3) && PSRango(0, 3)) {
+                    diagnostico = "Saludable";
+
+                    //return diagnostico;
+                }
+            } else ///Verificar Gingivitis
             if (PSRango(0, 5)) {
                 if (MGRango(0, 5)) {
                     diagnostico = "Gingivitis";
-                    
+
                 }
-            } else 
-            {
+            } else {
                 /////periodOntitis
-                diagnostico = "periodOntitis";
-                
+                diagnostico = "periodontitis";
+
                 /**
                  * Agregar el tiempo de evolucion
                  */
-                diagnostico+=" "+getDiagnosticoEvolucion();
-                
+                diagnostico += " " + getDiagnosticoEvolucion();
 
                 if (NiMax() >= 1 && NiMax() <= 2) {
                     diagnostico += " leve";
@@ -161,7 +158,7 @@ public class Periodontograma implements Serializable {
                 }
 
                 if (NiMax() >= 3 && NiMax() <= 4) {
-                    diagnostico += " moderado";
+                    diagnostico += " moderada";
 
                     Integer porcentaje = NiPorcetaje(3, 4);
                     if (porcentaje < 30) {
@@ -192,7 +189,8 @@ public class Periodontograma implements Serializable {
         int tratamiento = 0;
 
         String diagsnotico=diagnostico();
-        int tamsanio=diagsnotico.indexOf("Saludable");
+        //diagsnotico="periodontitis leve moderada";
+        //int tamsanio=diagsnotico.indexOf("Saludable");
         if(diagsnotico.indexOf("Saludable")>=0)
         {
             return 1;
@@ -205,7 +203,7 @@ public class Periodontograma implements Serializable {
             }
             else
             {
-                if(diagsnotico.indexOf("Periodentitis")>=0)
+                if(diagsnotico.indexOf("periodontitis")>=0)
                 {
                     return 3;
                 }

@@ -16,7 +16,7 @@
             <h:outputStylesheet library="css" name="style.css"/>            
         </f:facet>
 
-        <h:form style="font-size: 12px">
+        <h:form style="font-size: 18px">
             <b:panel id="panel1" title="Diagnostico" style="text-align: center" look="success">
                 <b:container style="text-align: left">
                     <b:row>                                                    
@@ -43,7 +43,7 @@
 
                         <b:column col-md="5" col-sm="4" col-xs="12">
 
-                            <p:panel>
+                            <p:panel visible="#{informeMB.periodontograma.tratamiento()==3?'true':'false'}">
                                 <f:facet name="header">
                                     <p:outputLabel value="Tiempo de evolución" />
                                 </f:facet>
@@ -65,7 +65,7 @@
                 <p:panel
                     style="text-align: left;"
                     header="Plan de tratamiento para saludable" 
-                    visible="#{informeMB.periodontograma.tratamiento() ==1?'true':'false'}">
+                    visible="#{informeMB.periodontograma.tratamiento() ==1?'true':'true'}">
 
                     <div style="padding-left: 50px">
 
@@ -103,8 +103,30 @@
                         <p style="font-weight: lighter;padding-left: 40px">
                             -	Terapia básica periodontal: detartraje.  
                         </p>
+                        
+                        <h4>3.	Fase correctiva</h4>
 
-                        <h4 style="font-weight: lighter;padding-left: 0px">3.	Fase de mantenimiento</h4>
+                        <p style="font-weight: lighter;padding-left: 40px">
+                            -   Remisiones a otras especialidades.
+                        </p>
+
+                        <div>
+                                                       
+                        <b:container>
+
+                            <b:row>
+                                <b:column offset-md="1" col-md="5" offset-sm="2" col-sm="4" offset-xs="2" col-xs="10">
+                                                <b:selectBooleanCheckbox value="Endodoncia" caption="Endodoncia" />
+                                                <b:selectBooleanCheckbox value="Estética" caption="Estética" />
+                                                <b:selectBooleanCheckbox value="Implantes" caption="Implantes" />
+                                                <b:selectBooleanCheckbox value="Ortodoncia" caption="Ortodoncia" />
+                                                <b:selectBooleanCheckbox value="Rehabilitación" caption="Rehabilitación" />
+                                     </b:column>
+                                 </b:row>
+                        </b:container>
+                        </div>
+
+                        <h4 style="font-weight: lighter;padding-left: 0px">4.	Fase de mantenimiento</h4>
 
                         <div style="padding-left: 40px">
                             <p:selectOneMenu value="#{informeMB.periodontograma.tratamiento1Terapia}" id="tratamientoTerapia">
@@ -126,7 +148,7 @@
 
                 </p:panel>
 
-                <p:panel id="panel4" header="Plan de tratamiento para periodontitis" style="text-align: left" visible="#{informeMB.periodontograma.tratamiento() ==3?'true':'false'}">
+                <p:panel id="panel4" header="Plan de tratamiento para periodontitis" style="text-align: left" visible="#{informeMB.periodontograma.tratamiento() ==3?'true':'true'}">
                     <div style="padding-left: 50px">
 
                         <h4>1.	Fase sistémica</h4>
@@ -211,9 +233,13 @@
                         <p style="font-weight: lighter;padding-left: 40px">
                             -   Evaluación.
                         </p>
-
-                        <p style="font-weight: lighter;padding-left: 40px">
-                            -	Tratamiento quirúrgico: Raspado y Alisado a Campo abierto.
+                        
+                            
+                        <p style="font-weight: lighter;padding-left: 40px;color: #999999">
+                            -	Tratamiento quirúrgico: 
+                            
+                             Raspado y Alisado a Campo abierto.
+                            (de ser necesario, persisten bolsas >= 5)
                         </p>
 
                         <p style="font-weight: lighter;padding-left: 40px">
@@ -223,24 +249,22 @@
                         <p style="font-weight: lighter;padding-left: 40px">
                             -	Remisiones a otras especialidades.
                         </p>
-
-
+                        
                         <b:container>
 
                             <b:row>
-                                <b:column offset-md="4" col-md="4" offset-sm ="3" col-sm="6" offset-xs="2" col-xs="8" >
-                                    <b:selectOneMenu value="#{informeMB.periodontograma.tratamiento3Remision}" id="typeID" required="false">
-                                        <f:selectItem itemLabel="Endodoncia" itemValue="Endodoncia" />
-                                        <f:selectItem itemLabel="Estética" itemValue="Estética" />
-                                        <f:selectItem itemLabel="Implantes" itemValue="Implantes" />
-                                        <f:selectItem itemLabel="Ortodoncia" itemValue="Ortodoncia" />
-                                        <f:selectItem itemLabel="Rehabilitación" itemValue="Rehabilitación" />
-                                    </b:selectOneMenu>
-
-                                </b:column>
-                            </b:row>
-
+                                <b:column offset-md="1" col-md="5" offset-sm="2" col-sm="4" offset-xs="2" col-xs="10">
+                                                <b:selectBooleanCheckbox value="Endodoncia" caption="Endodoncia" />
+                                                <b:selectBooleanCheckbox value="Estética" caption="Estética" />
+                                                <b:selectBooleanCheckbox value="Implantes" caption="Implantes" />
+                                                <b:selectBooleanCheckbox value="Ortodoncia" caption="Ortodoncia" />
+                                                <b:selectBooleanCheckbox value="Rehabilitación" caption="Rehabilitación" />
+                                     </b:column>
+                                 </b:row>
                         </b:container>
+
+
+                        
 
                         <h4 >4.	Fase de mantenimiento.</h4>
                         <p style="font-weight: lighter;padding-left: 40px">
@@ -271,7 +295,7 @@
 
 
 
-                <p:panel id="panel3" header="Plan de tratamiento para gingivitis" style="text-align: left" visible="#{informeMB.periodontograma.tratamiento() ==2?'true':'false'}">
+                <p:panel id="panel3" header="Plan de tratamiento para gingivitis" style="text-align: left" visible="#{informeMB.periodontograma.tratamiento() ==2?'true':'true'}">
 
                     <div style="padding-left: 50px">
 
@@ -322,17 +346,18 @@
 
                         <div>
                                                        
+                        <b:container>
+
                             <b:row>
-                                <b:column col-md="4">
-                                <b:selectOneMenu id="console2" value="#{informeMB.periodontograma.tratamiento2Remision}" style="padding-left: 50px" >
-                                    <f:selectItem itemLabel="Endodoncia" itemValue="Endodoncia" />
-                                    <f:selectItem itemLabel="Estética" itemValue="Estética" />
-                                    <f:selectItem itemLabel="Implantes" itemValue="Implantes" />
-                                    <f:selectItem itemLabel="Ortodoncia" itemValue="Ortodoncia" />
-                                    <f:selectItem itemLabel="Rehabilitación" itemValue="Rehabilitación" />
-                                </b:selectOneMenu>
-                                </b:column>
-                            </b:row>
+                                <b:column offset-md="1" col-md="5" offset-sm="2" col-sm="4" offset-xs="2" col-xs="10">
+                                                <b:selectBooleanCheckbox value="Endodoncia" caption="Endodoncia" />
+                                                <b:selectBooleanCheckbox value="Estética" caption="Estética" />
+                                                <b:selectBooleanCheckbox value="Implantes" caption="Implantes" />
+                                                <b:selectBooleanCheckbox value="Ortodoncia" caption="Ortodoncia" />
+                                                <b:selectBooleanCheckbox value="Rehabilitación" caption="Rehabilitación" />
+                                     </b:column>
+                                 </b:row>
+                        </b:container>
                         </div>
 
                         <h4>4.	Fase de mantenimiento</h4>

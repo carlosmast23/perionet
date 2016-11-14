@@ -58,7 +58,7 @@
                     </b:column>
 
                     <b:column col-md="2" col-sm="3" col-xs="6">
-                        <strong>HDC:</strong>
+                        <strong>HCL:</strong>
                     </b:column>
 
                     <b:column col-md="2" col-sm="3" col-xs="6">
@@ -141,7 +141,7 @@
 
                                                 <b:column col-md="5" col-sm="4" col-xs="12">
 
-                                                    <p:panel>
+                                                    <p:panel visible="#{periodontogramaMB.periodontogramaNuevo.tratamiento()==3?'true':'false'}">
                                                         <f:facet name="header">
                                                             <p:outputLabel value="Tiempo de evolución" />
                                                         </f:facet>
@@ -1029,11 +1029,9 @@
                                     <b:selectOneMenu value="#{periodontogramaMB.detalleDienteGrabar.pronosticoEspecializado}"  onchange="console.log('change');"
                                                      onselect="console.log('select');">       
                                          <f:selectItem itemLabel="Seleccione el Pron.esp" itemValue="" /> 
-                                         <f:selectItem itemLabel="Bueno" itemValue="B" />
-                                         <f:selectItem itemLabel="Dudoso" itemValue="D" />
-                                         <f:selectItem itemLabel="Malo" itemValue="M" />
-                                        <f:selectItem itemLabel="Imposible" itemValue="I" />
-                                        <f:selectItem itemLabel="Exodoncia" itemValue="EXO" />
+                                         <f:selectItem itemLabel="Favorable" itemValue="F" />
+                                         <f:selectItem itemLabel="Desfavorable" itemValue="D" />
+                                         <f:selectItem itemLabel="Reservado" itemValue="R" />
 
                                     </b:selectOneMenu>
                                 </b:column>

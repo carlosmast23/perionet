@@ -186,6 +186,7 @@ public class PeriodontogramaMB implements Serializable {
         periodontogramaNuevo = new Periodontograma();
         periodontogramaNuevo.setFecha(new Date());
         periodontogramaNuevo.setIdPaciente(paciente);
+        periodontogramaNuevo.setDiagnostico("periodontitis");
 
         List<Diente> dientesList = dienteServicio.obtenerTodo();
 

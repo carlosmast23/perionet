@@ -115,8 +115,10 @@ function paint(ctx, x1, y1, x2, y2, x3, y3, it) {
 
 }
 
-function dibujarDiente(canvas, path, orientacion, mg1, mg2, mg3, ps1, ps2, ps3, lmg)
+function dibujarDiente(canvas, path, orientacion, mg1, mg2, mg3, ps1, ps2, ps3, lmg,estado)
 {
+    //alert(estado);
+    
     mg1 = parseInt(mg1);
     mg2 = parseInt(mg2);
     mg3 = parseInt(mg3);
@@ -179,7 +181,9 @@ function dibujarDiente(canvas, path, orientacion, mg1, mg2, mg3, ps1, ps2, ps3, 
     ps3 = parseInt(ps3) * orientacion;
 
     canvas = document.getElementById(canvas);
+    
     canvas.style.background = 'rgb(169,165,196)';
+    
 
     ctx = canvas.getContext('2d');
 
@@ -187,7 +191,7 @@ function dibujarDiente(canvas, path, orientacion, mg1, mg2, mg3, ps1, ps2, ps3, 
     alto = ctx.canvas.height;
     
     //////////////////Dibujar MG////////////////////////
-    dibujarImg(path, ctx, ancho, alto,orientacion,mg1,mg2,mg3,ps1,ps2,ps3,lmg,psAux1,psAux2,psAux3,nl1,nl2,nl3);
+    dibujarImg(path, ctx, ancho, alto,orientacion,mg1,mg2,mg3,ps1,ps2,ps3,lmg,psAux1,psAux2,psAux3,nl1,nl2,nl3,estado);
     //dibujarCuadricula(ctx, ancho, alto);
     //dibujarLineaBase(ctx, ancho, alto, orientacion);
 
@@ -380,7 +384,7 @@ function alerta(msj)
 }
 
 
-function dibujarImg(path, ctx, ancho, alto,orientacion,mg1,mg2,mg3,ps1,ps2,ps3,lmg,psAux1,psAux2,psAux3,nl1,nl2,nl3)
+function dibujarImg(path, ctx, ancho, alto,orientacion,mg1,mg2,mg3,ps1,ps2,ps3,lmg,psAux1,psAux2,psAux3,nl1,nl2,nl3,estado)
 {
     //alert("orientacion"+orientacion);
 //    alert("mg1="+mg1);
@@ -397,17 +401,22 @@ function dibujarImg(path, ctx, ancho, alto,orientacion,mg1,mg2,mg3,ps1,ps2,ps3,l
     //alert(path);
     img.src = path;
     img.onload = function(){
-        ctx.drawImage(img, 0, 0, ancho, alto);
-            
         
-        if(mg1==0 && mg2==0 && mg3==0 & ps1==0 && ps2==0 && ps3==0)
+        ctx.drawImage(img, 0, 0, ancho, alto);
+        
+            
+        //dibujar cuando no exista
+        if(estado=="Ausente")
         {
+            //alert(estado);
             ctx.strokeStyle = "rgb(53,142,0)";
             ctx.moveTo(0,0);
             ctx.lineTo(ancho,alto);
             
+            
             ctx.moveTo(ancho,0);
             ctx.lineTo(0,alto);
+            //ctx.moveTo(0,0);
             //ctx.lineTo(alto,0);
             //ctx.lineTo(ancho * 4 / 5, base + y3 * incremento);
             ctx.stroke();
@@ -415,12 +424,31 @@ function dibujarImg(path, ctx, ancho, alto,orientacion,mg1,mg2,mg3,ps1,ps2,ps3,l
         else
         {
             
-            dibujarCuadricula(ctx, ancho, alto); 
+            if(estado=="Implante")
+            {
+                //alert(estado);
+                                
+                ctx.fillStyle = "rgb(255, 255, 0)";
+                ctx.fillRect(ancho-13,0,13,15); 
+                
+                ctx.fillStyle = "rgb(0, 0, 0)";
+                ctx.font = "bold 16px sans-serif";
+                ctx.fillText("i",ancho-8,14);
+                
+                //ctx.stroke();
+            }
+            
+            dibujarCuadricula(ctx, ancho, alto,estado); 
             dibujarLineaBase(ctx, ancho, alto, orientacion);
 
             dibujarFuncion(ctx, ancho, alto, orientacion, mg1, mg2, mg3, '4');
             dibujarFuncion(ctx, ancho, alto, orientacion, mg1 - ps1, mg2 - ps2, mg3 - ps3, '2');
-            dibujarFuncion(ctx, ancho, alto, orientacion, lmg, lmg, lmg, '1');
+            
+            //Valor de la linea LMG
+             if (orientacion == -1)
+                dibujarFuncion(ctx, ancho, alto, orientacion, lmg, lmg, lmg, '1');
+            else
+                dibujarFuncion(ctx, ancho, alto, orientacion, -lmg, -lmg, -lmg, '1');
 
             if (nl1 >= 4)
             {
@@ -443,11 +471,13 @@ function dibujarImg(path, ctx, ancho, alto,orientacion,mg1,mg2,mg3,ps1,ps2,ps3,l
     }
 }
 
-function dibujarCuadricula(ctx, ancho, alto)
+function dibujarCuadricula(ctx, ancho, alto,estado)
 {
     incremento = alto / 25;
     //alert(incremento);
     ctx.strokeStyle = "rgba(0,0,0,0.05)";
+    
+        
     //ctx.fillRect (0, 0, 20, 20);
 
     for (i = 0; i < 25; i++)
